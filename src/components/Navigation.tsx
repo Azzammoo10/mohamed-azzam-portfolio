@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Shield } from "lucide-react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,12 +31,13 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16">
-          {/* --- LOGO --- */}
+          {/* --- LOGO ÉPURÉ --- */}
           <a
             href="#home"
-            className="text-xl sm:text-2xl font-extrabold tracking-wide text-white hover:drop-shadow-[0_0_8px_rgba(0,255,204,0.3)] transition-all"
+            className="flex items-center gap-2 text-teal-400 hover:text-cyan-400 transition-all duration-300"
           >
-            Mohamed <span className="text-teal-400">Azzam</span>
+            <Shield size={22} className="drop-shadow-[0_0_6px_rgba(0,255,204,0.4)]" />
+            <span className="font-bold text-lg tracking-wide">MA</span>
           </a>
 
           {/* --- MENU DESKTOP --- */}
@@ -94,23 +95,17 @@ export function Navigation() {
 
           <div className="relative pt-5 text-center border-t border-slate-700/50">
             <p className="text-[11px] text-slate-500">
-              © 2025 <span className="text-teal-400 font-medium">Mohamed Azzam</span> — Sécurité & Développement
+              © 2025 <span className="text-teal-400 font-medium">Azzam Portfolio</span> — Sécurité & Dev
             </p>
           </div>
         </div>
       </div>
 
-      {/* --- Styles globaux pour les animations --- */}
+      {/* --- Animation fade-in --- */}
       <style>{`
         @keyframes fade-in {
-          from {
-            opacity: 0;
-            transform: translateY(10px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         .animate-fade-in {
           animation: fade-in 0.4s ease forwards;

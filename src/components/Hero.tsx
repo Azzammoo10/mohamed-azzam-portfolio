@@ -1,4 +1,4 @@
-import { Download, Github, Linkedin, Mail, FolderGit2 } from "lucide-react";
+import { Download, Github, Linkedin, Mail } from "lucide-react";
 import { Button } from "./Button";
 import { TerminalPanel } from "./TerminalPanel";
 
@@ -64,14 +64,7 @@ export function Hero() {
             Me Contacter
           </Button>
 
-          <Button
-            variant="outline"
-            icon={<FolderGit2 size={18} />}
-            onClick={() => scrollToSection("#projects")}
-            className="hover:shadow-[0_0_20px_rgba(0,255,204,0.4)]"
-          >
-            Voir mes projets
-          </Button>
+          
         </div>
 
         {/* --- Réseaux sociaux --- */}

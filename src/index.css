@@ -33,6 +33,15 @@
   html {
     scroll-behavior: smooth;
   }
+  /* --- Fix responsive overflow et alignement global --- */
+html, body {
+  width: 100%;
+  overflow-x: hidden; /* Empêche tout débordement horizontal */
+  margin: 0;
+  padding: 0;
+  background-color: #081220; /* même couleur que ton Hero */
+}
+
 }
 /* gradient animation on text (if used) */
 @keyframes gradient-x {
