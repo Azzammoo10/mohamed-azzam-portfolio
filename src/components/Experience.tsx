@@ -10,7 +10,7 @@ export function Experience() {
       location: 'Rabat',
       period: '06/2025 - 08/2025',
       type: 'Stage Ingénieur',
-      duration: '3 mois',
+      duration: '2 mois',
       achievements: [
         'Développement d\'un portail web de suivi des projets clients en Spring Boot, React.js, PostgreSQL',
         'Conception du portail : UML, modélisation de la base de données, maquettage avec Figma',
@@ -43,7 +43,7 @@ export function Experience() {
       location: 'Technopolis Rabat',
       period: '06/2023 - 07/2023',
       type: 'Stage Réseaux',
-      duration: '2 mois',
+      duration: '1 mois',
       achievements: [
         'Mise en place d\'une solution de supervision réseau avec Nagios et Centreon',
         'Surveillance des services critiques et configuration d\'alertes'

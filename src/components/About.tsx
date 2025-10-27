@@ -3,27 +3,28 @@ import { Shield, Code, Network, Award } from 'lucide-react';
 
 export function About() {
   const strengths = [
-    {
-      icon: <Shield className="text-teal-400" size={32} />,
-      title: 'Cybersécurité',
-      description: 'Expert en sécurité des applications avec JWT, Spring Security, et hachage SHA-256'
-    },
-    {
-      icon: <Code className="text-cyan-400" size={32} />,
-      title: 'Développement Sécurisé',
-      description: 'Full-stack avec Spring Boot, React.js, Django et .NET'
-    },
-    {
-      icon: <Network className="text-teal-400" size={32} />,
-      title: 'Réseaux & Supervision',
-      description: 'Certifié CCNA avec expérience en Nagios et Centreon'
-    },
-    {
-      icon: <Award className="text-cyan-400" size={32} />,
-      title: 'Certifications',
-      description: 'NSE 1 Fortinet, CompTIA Security+, CCNAv7, Linux'
-    }
-  ];
+  {
+    icon: <Shield className="text-teal-400" size={32} />,
+    title: "Cybersécurité",
+    description: "Protection des applications avec JWT, Spring Security et chiffrement SHA-256.",
+  },
+  {
+    icon: <Code className="text-cyan-400" size={32} />,
+    title: "Développement Sécurisé",
+    description: "Full-stack : Spring Boot, React.js, Django, et .NET.",
+  },
+  {
+    icon: <Network className="text-teal-400" size={32} />,
+    title: "Réseaux & Supervision",
+    description: "CCNA, Cisco Packet Tracer, Nagios, Nmap, Wireshark.",
+  },
+  {
+    icon: <Award className="text-cyan-400" size={32} />,
+    title: "Certifications",
+    description: "NSE 1 Fortinet, CCNAv7, Linux, Security+ (en cours).",
+  },
+];
+
 
   return (
     <section id="about" className="py-20 px-4 bg-slate-900">

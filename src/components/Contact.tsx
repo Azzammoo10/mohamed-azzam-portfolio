@@ -1,19 +1,19 @@
 import { Card } from "./Card";
 import { Button } from "./Button";
-import { Mail, MapPin, Github, Linkedin, Send, CheckCircle } from "lucide-react";
+import { Mail, MapPin, Github, Linkedin, Send, CheckCircle, Phone } from "lucide-react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function Contact() {
-  const [state, handleSubmit] = useForm("mwpwpynd"); // 👈 Ton ID Formspree
+  const [state, handleSubmit] = useForm("mwpwpynd");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({ email: "", message: "" });
 
   useEffect(() => {
     if (state.succeeded) {
       setShowSuccess(true);
-      setFormData({ email: "", message: "" }); // ✅ Vide le formulaire
+      setFormData({ email: "", message: "" });
       const timer = setTimeout(() => setShowSuccess(false), 5000);
       return () => clearTimeout(timer);
     }
@@ -21,24 +21,25 @@ export function Contact() {
 
   const contactInfo = [
     {
-      icon: <Mail className="text-teal-400" size={24} />,
+      icon: <Phone className="text-teal-400" size={22} />,
+      label: "Téléphone",
+      value: "+212 6 82 39 96 47",
+      link: "tel:+212682399647",
+    },
+    {
+      icon: <Mail className="text-cyan-400" size={22} />,
       label: "Email",
       value: "azzam.moo10@gmail.com",
       link: "mailto:azzam.moo10@gmail.com",
     },
     {
-      icon: <MapPin className="text-cyan-400" size={24} />,
+      icon: <MapPin className="text-teal-400" size={22} />,
       label: "Localisation",
       value: "Salé, Maroc",
     },
+  
     {
-      icon: <Github className="text-teal-400" size={24} />,
-      label: "GitHub",
-      value: "github.com/Azzammoo10",
-      link: "https://github.com/Azzammoo10",
-    },
-    {
-      icon: <Linkedin className="text-cyan-400" size={24} />,
+      icon: <Linkedin className="text-teal-400" size={22} />,
       label: "LinkedIn",
       value: "Mohamed Azzam",
       link: "https://www.linkedin.com/in/mohamed-azzam-93115823a/",
@@ -59,12 +60,10 @@ export function Contact() {
         <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* --- Formulaire --- */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6">
-              Envoyez-moi un message
-            </h3>
+            <h3 className="text-2xl font-bold text-white mb-6">Envoyez-moi un message</h3>
 
             <Card className="relative overflow-hidden">
-              {/* ✅ Animation du message de succès */}
+              {/* ✅ Message de succès animé */}
               <AnimatePresence>
                 {showSuccess && (
                   <motion.div
@@ -82,10 +81,7 @@ export function Contact() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-slate-300 mb-2 text-sm"
-                  >
+                  <label htmlFor="email" className="block text-slate-300 mb-2 text-sm">
                     Adresse Email
                   </label>
                   <input
@@ -94,10 +90,8 @@ export function Contact() {
                     name="email"
                     required
                     value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-teal-500 transition"
+                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-teal-500 transition text-sm"
                     placeholder="votre.email@example.com"
                   />
                   <ValidationError
@@ -109,10 +103,7 @@ export function Contact() {
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-slate-300 mb-2 text-sm"
-                  >
+                  <label htmlFor="message" className="block text-slate-300 mb-2 text-sm">
                     Message
                   </label>
                   <textarea
@@ -121,10 +112,8 @@ export function Contact() {
                     required
                     rows={5}
                     value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-teal-500 transition resize-none"
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-slate-600 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:border-teal-500 transition resize-none text-sm"
                     placeholder="Votre message..."
                   />
                   <ValidationError
@@ -150,41 +139,39 @@ export function Contact() {
 
           {/* --- Informations de contact --- */}
           <div>
-            <h3 className="text-2xl font-bold text-white mb-6">
-              Informations de contact
-            </h3>
-            <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-white mb-6">Informations de contact</h3>
+            <div className="space-y-3 sm:space-y-4">
               {contactInfo.map((info, index) => (
                 <Card
                   key={index}
                   hover={!!info.link}
-                  className="bg-slate-800/40 border border-slate-700/50 hover:border-teal-400/30 transition"
+                  className="bg-slate-800/40 border border-slate-700/50 hover:border-teal-400/30 transition px-4 py-3 sm:py-4"
                 >
                   {info.link ? (
                     <a
                       href={info.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-start gap-4"
+                      className="flex items-start gap-3 sm:gap-4"
                     >
-                      <div className="mt-1">{info.icon}</div>
+                      <div className="mt-0.5 sm:mt-1">{info.icon}</div>
                       <div>
-                        <h4 className="text-white font-semibold mb-1">
+                        <h4 className="text-white font-semibold text-sm mb-1">
                           {info.label}
                         </h4>
-                        <p className="text-slate-400 text-sm hover:text-teal-400 transition">
+                        <p className="text-slate-400 text-xs sm:text-sm hover:text-teal-400 transition break-words">
                           {info.value}
                         </p>
                       </div>
                     </a>
                   ) : (
-                    <div className="flex items-start gap-4">
-                      <div className="mt-1">{info.icon}</div>
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="mt-0.5 sm:mt-1">{info.icon}</div>
                       <div>
-                        <h4 className="text-white font-semibold mb-1">
+                        <h4 className="text-white font-semibold text-sm mb-1">
                           {info.label}
                         </h4>
-                        <p className="text-slate-400 text-sm">{info.value}</p>
+                        <p className="text-slate-400 text-xs sm:text-sm break-words">{info.value}</p>
                       </div>
                     </div>
                   )}
