@@ -141,24 +141,21 @@ export function EducationSection() {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
+  className="mt-16 flex flex-wrap justify-center items-center gap-6 max-w-3xl mx-auto text-center"
         >
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
+  <div className="w-32 sm:w-40 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-teal-400/40 transition-all duration-300 hover:scale-105">
             <div className="text-2xl font-bold text-teal-400">2</div>
             <div className="text-sm text-slate-400">Formations</div>
           </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
+  <div className="w-32 sm:w-40 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-teal-400/40 transition-all duration-300 hover:scale-105">
             <div className="text-2xl font-bold text-cyan-400">4+</div>
             <div className="text-sm text-slate-400">Années</div>
           </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
+  <div className="w-32 sm:w-40 p-4 bg-slate-800/40 rounded-xl border border-slate-700/50 hover:border-teal-400/40 transition-all duration-300 hover:scale-105">
             <div className="text-2xl font-bold text-teal-400">100%</div>
             <div className="text-sm text-slate-400">Réussite</div>
           </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-cyan-400">∞</div>
-            <div className="text-sm text-slate-400">Passion</div>
-          </div>
+          
         </motion.div>
       </div>
     </section>

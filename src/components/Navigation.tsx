@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Shield } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -31,13 +31,21 @@ export function Navigation() {
     >
       <div className="max-w-7xl mx-auto px-5 sm:px-6">
         <div className="flex items-center justify-between h-16">
-          {/* --- LOGO ÉPURÉ --- */}
+          {/* --- LOGO PHOTO --- */}
           <a
             href="#home"
             className="flex items-center gap-2 text-teal-400 hover:text-cyan-400 transition-all duration-300"
           >
-            <Shield size={22} className="drop-shadow-[0_0_6px_rgba(0,255,204,0.4)]" />
-            <span className="font-bold text-lg tracking-wide">MA</span>
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border-2 border-teal-400/60 hover:border-cyan-400 transition-all duration-300 shadow-[0_0_10px_rgba(0,255,204,0.3)] hover:shadow-[0_0_12px_rgba(0,255,255,0.4)]">
+              <img
+                src="/DSC_4573.jpg" // ✅ place ton image dans /public/mohamed.jpg
+                alt="Photo de profil"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <span className="font-bold text-lg tracking-wide text-slate-200 hover:text-teal-300 transition">
+              MA
+            </span>
           </a>
 
           {/* --- MENU DESKTOP --- */}

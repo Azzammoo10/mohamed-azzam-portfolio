@@ -8,28 +8,28 @@ export function Projects() {
       title: 'Portail de Suivi Clients',
       description: 'Application web complète pour le suivi des projets clients avec dashboard interactif, gestion des rôles, génération de PDF, et notifications en temps réel.',
       tech: ['Spring Boot', 'React.js', 'PostgreSQL', 'JWT'],
-      github: 'https://github.com/Azzamm5',
+      github: 'https://github.com/Azzammoo10/sqli-project-tracker',
       featured: true
     },
     {
       title: 'Gestionnaire de Mots de Passe',
       description: 'Application sécurisée en .NET utilisant le hachage SHA-256 et un système de chiffrement pour protéger les données sensibles des utilisateurs.',
       tech: ['.NET', 'C#', 'SHA-256', 'Encryption'],
-      github: 'https://github.com/Azzamm5',
+      github: 'https://github.com/Azzammoo10/SecurePassManager-MVC',
       featured: true
     },
     {
       title: 'EMSI Career Connect',
       description: 'Plateforme web de recrutement et de réseautage professionnel dédiée aux lauréats de l’EMSI.',
       tech: ['Node.js', 'Express.js', 'React', 'Mongo DB','Azure'],
-      github: 'https://github.com/Azzamm5',
+      github: 'https://github.com/Azzammoo10/Emsi-Career-connect',
       featured: false
     },
     {
       title: 'Application Web Django',
       description: 'Développement d\'une application web full-stack avec interface responsive et gestion complète des données utilisateurs.',
       tech: ['Django', 'Python', 'MySQL', 'Bootstrap'],
-      github: 'https://github.com/Azzamm5',
+      github: 'https://github.com/Azzammoo10/django-it-solutions-store',
       featured: false
     }
   ];
@@ -119,7 +119,7 @@ export function Projects() {
 
             {/* Bouton GitHub */}
             <a
-              href="https://github.com/Azzamm5"
+              href="https://github.com/Azzammoo10"
               target="_blank"
               rel="noopener noreferrer"
               className="group relative inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-medium rounded-lg shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 hover:scale-105 transition-all duration-300"

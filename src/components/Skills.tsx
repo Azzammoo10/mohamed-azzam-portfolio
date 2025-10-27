@@ -3,7 +3,7 @@ import { Card } from "./Card";
 import {
   SiPython, SiCplusplus, SiSharp, SiJavascript, SiSpringboot, SiReact, SiDjango,
   SiDotnet, SiPostgresql, SiMysql, SiMongodb, SiGithub, SiFigma, SiPostman,
-  SiLinux, SiNodedotjs, SiJsonwebtokens, SiCisco
+   SiNodedotjs, SiJsonwebtokens, SiCisco
 } from "react-icons/si";
 import { FaJava, FaLock, FaDatabase, FaCloud } from "react-icons/fa";
 
@@ -22,7 +22,7 @@ const iconMap: Record<string, JSX.Element> = {
   ".NET": <SiDotnet className="text-indigo-400 drop-shadow-[0_0_8px_rgba(100,100,255,0.4)]" />,
   "Node.js": <SiNodedotjs className="text-green-500 drop-shadow-[0_0_10px_rgba(0,255,100,0.5)]" />,
 
-  // --- BDD ---
+  // --- Bases de données ---
   PostgreSQL: <SiPostgresql className="text-blue-500 drop-shadow-[0_0_8px_rgba(0,150,255,0.5)]" />,
   MySQL: <SiMysql className="text-sky-500 drop-shadow-[0_0_8px_rgba(0,200,255,0.5)]" />,
   MongoDB: <SiMongodb className="text-green-500 drop-shadow-[0_0_8px_rgba(0,255,100,0.5)]" />,
@@ -31,12 +31,13 @@ const iconMap: Record<string, JSX.Element> = {
   JWT: <SiJsonwebtokens className="text-amber-400 drop-shadow-[0_0_10px_rgba(255,200,0,0.5)]" />,
   "Spring Security": <FaLock className="text-teal-400 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]" />,
   "SHA-256": <FaLock className="text-emerald-400 drop-shadow-[0_0_8px_rgba(0,255,150,0.5)]" />,
-  Chiffrement: <FaLock className="text-blue-400 drop-shadow-[0_0_8px_rgba(0,150,255,0.5)]" />,
+  AES: <FaLock className="text-blue-400 drop-shadow-[0_0_8px_rgba(0,150,255,0.5)]" />,
 
   // --- Réseaux ---
   CCNA: <SiCisco className="text-blue-400 drop-shadow-[0_0_8px_rgba(0,150,255,0.5)]" />,
   "Packet Tracer": <SiCisco className="text-cyan-400 drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]" />,
-  Linux: <SiLinux className="text-gray-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]" />,
+  Nmap: <FaLock className="text-teal-400 drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]" />,
+  Wireshark: <FaLock className="text-cyan-400 drop-shadow-[0_0_8px_rgba(0,255,255,0.5)]" />,
 
   // --- Outils ---
   GitHub: <SiGithub className="text-gray-300 drop-shadow-[0_0_6px_rgba(255,255,255,0.3)]" />,
@@ -63,8 +64,8 @@ export function Skills() {
     { category: "Langages", skills: ["Java", "Python", "C++", "C#", "JavaScript"], color: "from-teal-500 to-cyan-500" },
     { category: "Frameworks", skills: ["Spring Boot", "React.js", "Django", ".NET", "Node.js"], color: "from-cyan-500 to-blue-500" },
     { category: "Bases de Données", skills: ["PostgreSQL", "MySQL", "MongoDB"], color: "from-blue-500 to-indigo-500" },
-    { category: "Sécurité", skills: ["JWT", "Spring Security", "SHA-256", "Chiffrement"], color: "from-teal-500 to-emerald-500" },
-    { category: "Réseaux", skills: ["CCNA", "Packet Tracer", "Linux"], color: "from-emerald-500 to-green-500" },
+    { category: "Sécurité", skills: ["JWT", "Spring Security", "SHA-256", "AES"], color: "from-teal-500 to-emerald-500" },
+    { category: "Réseaux", skills: ["CCNA", "Packet Tracer", "Nmap", "Wireshark"], color: "from-emerald-500 to-green-500" },
     { category: "Outils", skills: ["GitHub", "Figma", "Postman", "Azure"], color: "from-blue-500 to-cyan-500" },
   ];
 
@@ -86,7 +87,7 @@ export function Skills() {
             Compétences <span className="text-teal-400">Techniques</span>
           </h2>
           <p className="text-slate-400 text-base max-w-2xl mx-auto">
-            Un ensemble de technologies maîtrisées couvrant le développement, la sécurité et l’intégration cloud.
+            Un ensemble de technologies utilisées couvrant le développement, la sécurité et l’intégration cloud.
           </p>
           <div className="h-[2px] w-24 mx-auto mt-5 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 rounded-full shadow-[0_0_15px_rgba(0,255,204,0.4)]"></div>
         </motion.div>

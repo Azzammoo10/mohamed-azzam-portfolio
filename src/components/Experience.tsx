@@ -167,7 +167,7 @@ export function Experience() {
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
         >
           <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-teal-400">3</div>
+            <div className="text-2xl font-bold text-teal-400">4</div>
             <div className="text-sm text-slate-400">Stages</div>
           </div>
           <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
@@ -175,11 +175,11 @@ export function Experience() {
             <div className="text-sm text-slate-400">Mois</div>
           </div>
           <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-blue-400">10+</div>
+            <div className="text-2xl font-bold text-blue-400">8+</div>
             <div className="text-sm text-slate-400">Technologies</div>
           </div>
           <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-indigo-400">100%</div>
+            <div className="text-2xl font-bold text-indigo-400">70%</div>
             <div className="text-sm text-slate-400">Satisfaction</div>
           </div>
         </motion.div>
