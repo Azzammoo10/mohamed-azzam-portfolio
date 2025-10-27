@@ -1,41 +1,32 @@
-import { useState } from "react"
-import { Card } from "../components/ui/card"
-import { Badge } from "../components/ui/badge"
-import { Award, CheckCircle2, Clock } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState } from "react";
+import { Card } from "../components/ui/card";
+import { Badge } from "../components/ui/badge";
+import { Award, CheckCircle2, Clock, ExternalLink } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export function CertificationsSection() {
   const certifications = [
     { name: "CompTIA Security+", issuer: "CodeCademy", status: "In progress", url: "" },
-    { name: "Fortinet NSE 1", issuer: "Fortinet", status: "Completed", url: "" },
-    { name: "CCNAv7 Introduction aux Réseaux", issuer: "Fortinet", status: "Completed", url: "" },
-    { name: "REST APIs with Spring and Java Skill Path", issuer: "CodeCademy", status: "Completed", url: "" },
-    { name: "Become a Secure Coder", issuer: "Codecademy", status: "Completed", url: "" },
-    { name: "Cisco Packet Tracer Simulation", issuer: "Openclassrom", status: "Completed", url: "" },
-    { name: "Linux Basics", issuer: "Openclassrom", status: "Completed", url: "" },
-    { name: "UNIX WORKBANCH", issuer: "Coursera", status: "Completed", url: "" },
-    { name: "POO en C++", issuer: "Coursera", status: "Completed", url: "" },
-    { name: "Java", issuer: "LinkedIn", status: "Completed", url: "" },
-    { name: "Git and Github", issuer: "LinkedIn", status: "Completed", url: "" },
-    { name: "Virtual Network in Azure", issuer: "Coursera", status: "Completed", url: "" },
-  ]
+    { name: "Fortinet NSE 1", issuer: "Fortinet", status: "Completed", url: "https://training.fortinet.com/mod/customcert/verify_certificate.php?contextid=251439&code=CzsYUTK2tF&qrcode=1" },
+    { name: "CCNAv7 Introduction aux Réseaux", issuer: "Cisco", status: "Completed", url: "https://collection.cloudinary.com/daisrmfte/5b02c8692e3330f85ef7cc80f0f8b21e" },
+    { name: "REST APIs with Spring and Java Skill Path", issuer: "CodeCademy", status: "Completed", url: "https://www.codecademy.com/profiles/AZZAM-MO/certificates/60f1edf0ac9368001c6025c4" },
+    { name: "Become a Secure Coder", issuer: "Codecademy", status: "Completed", url: "https://www.codecademy.com/profiles/AZZAM-MO/certificates/90b621d88d884f0fabed4c3fd41e7e7c" },
+    { name: "Cisco Packet Tracer Simulation", issuer: "OpenClassrooms", status: "Completed", url: "https://openclassrooms.com/fr/course-certificates/3159379323" },
+    { name: "Linux Basics", issuer: "OpenClassrooms", status: "Completed", url: "https://openclassrooms.com/fr/course-certificates/9289267392" },
+    { name: "UNIX WORKBANCH", issuer: "Coursera", status: "Completed", url: "https://www.coursera.org/learn/unix" },
+    { name: "POO en C++", issuer: "Coursera", status: "Completed", url: "https://coursera.org/share/dafdc59f883c2bd21c94503717361687" },
+    { name: "Java", issuer: "LinkedIn", status: "Completed", url: "https://www.linkedin.com/learning/certificates/5d5b30ef6c76b77eee6b2f37fc520cbac9cfec8e2f58994b314f07974944e0a0" },
+    { name: "Git and Github", issuer: "LinkedIn", status: "Completed", url: "https://www.coursera.org/account/accomplishments/verify/CMYS0XRZCRA6" },
+    { name: "Virtual Network in Azure", issuer: "Coursera", status: "Completed", url: "https://www.coursera.org/account/accomplishments/verify/M091EN04YFHY" },
+  ];
 
-  const logos = [
-    { src: "/fortinet.png", alt: "Fortinet", url: "https://www.fortinet.com" },
-    { src: "/cisco.png", alt: "Cisco", url: "https://www.cisco.com" },
-    { src: "/Coursera.png", alt: "Coursera", url: "https://www.coursera.org" },
-    { src: "/linkedin.png", alt: "LinkedIn", url: "https://www.linkedin.com" },
-    { src: "/codecademy.png", alt: "Codecademy", url: "https://www.codecademy.com" },
-    { src: "/openClassrooms.png", alt: "OpenClassrooms", url: "https://openclassrooms.com" },
-  ]
-
-  const [visibleCount, setVisibleCount] = useState(6)
-  const toggleVisible = () => setVisibleCount(visibleCount === 6 ? certifications.length : 6)
+  const [visibleCount, setVisibleCount] = useState(6);
+  const toggleVisible = () => setVisibleCount(visibleCount === 6 ? certifications.length : 6);
 
   return (
     <section id="certifications" className="relative py-20 sm:py-24 overflow-hidden bg-slate-900">
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-12">
-        {/* --- Titre principal --- */}
+        {/* --- Header --- */}
         <div className="text-center space-y-4 mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             Certifications <span className="text-teal-400">Professionnelles</span>
@@ -68,14 +59,13 @@ export function CertificationsSection() {
                 <Card
                   className="p-5 sm:p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md 
                   transition-all duration-300 hover:border-teal-500/40 hover:-translate-y-1 
-                  hover:shadow-[0_0_25px_rgba(45,255,196,0.15)]"
+                  hover:shadow-[0_0_25px_rgba(45,255,196,0.15)] relative overflow-hidden"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h4 className="font-semibold text-white text-sm mb-1 leading-snug">{cert.name}</h4>
                       <p className="text-xs text-teal-400">{cert.issuer}</p>
                     </div>
-
                     {cert.status === "Completed" ? (
                       <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
                     ) : (
@@ -83,16 +73,25 @@ export function CertificationsSection() {
                     )}
                   </div>
 
-                  <p className="text-xs text-slate-400 mb-2">
-                    {cert.url ? (
-                      <a href={cert.url} className="text-cyan-400 hover:underline" target="_blank" rel="noreferrer">
-                        Voir le certificat
-                      </a>
-                    ) : (
-                      "Formation en ligne"
-                    )}
-                  </p>
+                  {/* --- Bouton de certificat --- */}
+                  {cert.url ? (
+                    <motion.a
+                      href={cert.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.97 }}
+                      className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden transition-all duration-300"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/10 to-teal-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+                      <ExternalLink size={12} className="text-teal-400 group-hover:text-white transition-colors" />
+                      <span className="relative z-10">Voir le certificat</span>
+                    </motion.a>
+                  ) : (
+                    <div className="text-xs text-slate-500 italic mb-3">Formation en cours</div>
+                  )}
 
+                  {/* --- Statut --- */}
                   <div className="flex items-center justify-between pt-2 border-t border-slate-700/40">
                     <span className="text-xs text-slate-500">
                       {cert.status === "Completed" ? "Validée" : "En cours"}
@@ -116,67 +115,18 @@ export function CertificationsSection() {
 
         {/* --- Bouton Afficher plus / moins --- */}
         <div className="text-center mt-10">
-          <button
+          <motion.button
             onClick={toggleVisible}
-            className="px-6 py-2 text-sm font-medium rounded-full border border-teal-500/50 text-teal-400 
-            hover:bg-teal-500/10 transition-all duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
-            {visibleCount === 6 ? "Afficher plus" : "Afficher moins"}
-          </button>
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            <span className="relative z-10">
+              {visibleCount === 6 ? "Afficher plus" : "Afficher moins"}
+            </span>
+          </motion.button>
         </div>
-
-        {/* --- Section Organismes de certification --- */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="mt-16 text-center"
-        >
-          <h3 className="text-xl font-bold text-white mb-2">
-            <span className="text-teal-400">Organismes</span> de certification
-          </h3>
-          <p className="text-slate-400 text-sm max-w-2xl mx-auto mb-8">
-            Partenaires de formation reconnus dans le domaine de la cybersécurité et des technologies
-          </p>
-
-          {/* --- Grille ajustée --- */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 max-w-5xl mx-auto">
-            {logos.map((logo, index) => (
-              <motion.a
-                key={index}
-                href={logo.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="group flex flex-col items-center p-3 sm:p-4 bg-slate-800/30 backdrop-blur-sm border border-slate-700/30 rounded-xl hover:border-teal-500/50 hover:bg-slate-800/50 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className="mb-3 p-2 bg-white/5 rounded-lg group-hover:bg-white/10 transition-all duration-300">
-                  <img
-                    src={logo.src}
-                    alt={logo.alt}
-                    className="h-6 sm:h-8 w-auto object-contain transition-all duration-300"
-                  />
-                </div>
-                <p className="text-xs text-slate-400 group-hover:text-teal-400 transition-colors text-center font-medium">
-                  {logo.alt}
-                </p>
-              </motion.a>
-            ))}
-          </div>
-
-          {/* --- Badge --- */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-8 inline-flex items-center gap-2 px-4 py-2 bg-slate-800/50 border border-teal-500/30 rounded-full"
-          >
-            <div className="w-2 h-2 bg-teal-400 rounded-full animate-pulse"></div>
-            <span className="text-sm text-slate-300">Partenaires officiels reconnus</span>
-          </motion.div>
-        </motion.div>
 
         {/* --- Objectif 2026 --- */}
         <div className="max-w-md sm:max-w-3xl mx-auto mt-14">
@@ -192,5 +142,5 @@ export function CertificationsSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }
