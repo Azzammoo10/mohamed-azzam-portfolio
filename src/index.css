@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .delay-1000 {
+    animation-delay: 1s;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+/* gradient animation on text (if used) */
+@keyframes gradient-x {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+.animate-gradient-x {
+  background-size: 200% 200%;
+  animation: gradient-x 5s ease infinite;
+}
+
+/* scanner laser */
+@keyframes scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.animate-scan {
+  animation: scan 4s linear infinite;
+}
+
+/* utility for slow pulsing used on halos */
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.35; transform: scale(1) }
+  50% { opacity: 0.75; transform: scale(1.02) }
+}
+.animate-pulse-slow { animation: pulse-slow 6s ease-in-out infinite; }
+
