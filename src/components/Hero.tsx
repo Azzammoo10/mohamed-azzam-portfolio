@@ -70,18 +70,29 @@ export function Hero() {
           className="flex flex-wrap justify-center gap-4 mb-10"
         >
           <Button
-            variant="primary"
-            icon={<Download size={18} />}
+  variant="primary"
+  icon={<Download size={18} />}
   className="hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,204,0.25)] active:scale-95"
-            onClick={() => {
-              const link = document.createElement("a");
-              link.href = "/Mohamed_Azzam_CV.pdf";
-              link.download = "Mohamed_Azzam_CV.pdf";
-              link.click();
-            }}
-          >
-            Télécharger CV
-          </Button>
+  onClick={() => {
+    // --- 🔹 Envoi d’un événement à Google Analytics ---
+    if (window.gtag) {
+      window.gtag("event", "download_cv", {
+        event_category: "engagement",
+        event_label: "Téléchargement CV",
+        value: 1,
+      });
+    }
+
+    // --- 🔹 Action réelle de téléchargement ---
+    const link = document.createElement("a");
+    link.href = "/Mohamed_Azzam_CV.pdf";
+    link.download = "Mohamed_Azzam_CV.pdf";
+    link.click();
+  }}
+>
+  Télécharger CV
+</Button>
+
 
           <Button
             variant="outline"
