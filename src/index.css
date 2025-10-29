@@ -153,3 +153,10 @@ html, body {
     transform: translateY(0);
   }
 }
+@keyframes smoothBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+.animate-bounce {
+  animation: smoothBounce 2s infinite ease-in-out;
+}

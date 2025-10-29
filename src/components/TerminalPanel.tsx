@@ -10,7 +10,7 @@ export function TerminalPanel({
   pauseBetweenLines = 900,
 }: Props) {
 const lines = [
-  "Démarrage du parcours...",
+  " Démarrage du parcours...",
   "[PROFIL :  Mohamed AZZAM — Ingénieur Info & Cybersécurité",
   "[ÉTAPE 1 : 🎓 Étudiant — Code sécurisé & réseaux.",
   "[ÉTAPE 2 : 💻 Dev Junior — Spring Boot & React.",

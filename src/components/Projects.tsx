@@ -1,136 +1,207 @@
-import { Section } from './Section';
-import { Card } from './Card';
-import { Github, ExternalLink } from 'lucide-react';
+"use client";
+
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react";
 
 export function Projects() {
   const projects = [
     {
-      title: 'Portail de Suivi Clients',
-      description: 'Application web complète pour le suivi des projets clients avec dashboard interactif, gestion des rôles, génération de PDF, et notifications en temps réel.',
-      tech: ['Spring Boot', 'React.js', 'PostgreSQL', 'JWT'],
-      github: 'https://github.com/Azzammoo10/sqli-project-tracker',
-      featured: true
+      title: "SecureAuth+",
+      description:
+        "Plateforme IAM avec Spring Security, JWT, audit de sécurité et gestion dynamique des rôles.",
+      tech: ["Spring Boot", "Spring Security", "JWT", "PostgreSQL", "Lombok"],
+      github: "https://github.com/Azzammoo10/SecureAuth-.git",
+      featured: true,
+      status: "En cours",
+      color: "from-green-500 to-emerald-500",
     },
     {
-      title: 'Gestionnaire de Mots de Passe',
-      description: 'Application sécurisée en .NET utilisant le hachage SHA-256 et un système de chiffrement pour protéger les données sensibles des utilisateurs.',
-      tech: ['.NET', 'C#', 'SHA-256', 'Encryption'],
-      github: 'https://github.com/Azzammoo10/SecurePassManager-MVC',
-      featured: true
+      title: "Portail de Suivi Clients",
+      description:
+        "Application web de suivi client avec dashboard, PDF, rôles et notifications en temps réel.",
+      tech: ["Spring Boot", "React.js", "PostgreSQL", "JWT"],
+      github: "https://github.com/Azzammoo10/sqli-project-tracker",
+      featured: true,
+      status: "Terminé",
+      color: "from-green-500 to-emerald-500",
     },
     {
-      title: 'EMSI Career Connect',
-      description: 'Plateforme web de recrutement et de réseautage professionnel dédiée aux lauréats de l’EMSI.',
-      tech: ['Node.js', 'Express.js', 'React', 'Mongo DB','Azure'],
-      github: 'https://github.com/Azzammoo10/Emsi-Career-connect',
-      featured: false
+      title: "SecurePassManager",
+      description:
+        "Gestionnaire de mots de passe en .NET avec hachage SHA-256 et chiffrement AES.",
+      tech: [".NET", "C#", "SHA-256", "Encryption"],
+      github: "https://github.com/Azzammoo10/SecurePassManager-MVC",
+      featured: true,
+      status: "Terminé",
+      color: "from-cyan-500 to-blue-500",
     },
     {
-      title: 'Application Web Django',
-      description: 'Développement d\'une application web full-stack avec interface responsive et gestion complète des données utilisateurs.',
-      tech: ['Django', 'Python', 'MySQL', 'Bootstrap'],
-      github: 'https://github.com/Azzammoo10/django-it-solutions-store',
-      featured: false
-    }
+      title: "EMSI Career Connect",
+      description:
+        "Plateforme de recrutement et de réseautage pour les lauréats EMSI.",
+      tech: ["Node.js", "Express.js", "React", "MongoDB", "Azure"],
+      github: "https://github.com/Azzammoo10/Emsi-Career-connect",
+      featured: false,
+      status: "Terminé",
+      color: "from-blue-500 to-indigo-500",
+    },
+    {
+      title: "Application Web Django",
+      description:
+        "Application web full-stack Django avec gestion complète et interface responsive.",
+      tech: ["Django", "Python", "MySQL", "Bootstrap"],
+      github: "https://github.com/Azzammoo10/django-it-solutions-store",
+      featured: false,
+      status: "Terminé",
+      color: "from-indigo-500 to-purple-500",
+    },
+    {
+      title: "Gestion Universitaire (C++)",
+      description:
+        "Application POO en C++ pour gérer les étudiants, enseignants et personnels.",
+      tech: ["C++", "POO", "UML", "OOP Design"],
+      github:
+        "https://github.com/Azzamm5/application-de-gestion-des-tudiants-et-du-personnel-universitaire.git",
+      featured: true,
+      status: "Terminé",
+      color: "from-sky-500 to-teal-500",
+    },
   ];
 
+  const [visibleCount, setVisibleCount] = useState(3);
+  const toggleVisible = () => {
+    setVisibleCount(visibleCount === 3 ? projects.length : 3);
+  };
+
+  const getStatusStyle = (status: string) => {
+    switch (status) {
+      case "Terminé":
+        return "from-green-500/20 to-emerald-500/20 text-green-400 border-green-500/40";
+      case "En cours":
+        return "from-amber-500/20 to-orange-500/20 text-amber-400 border-amber-500/40";
+      default:
+        return "from-slate-600/20 to-slate-700/20 text-slate-400 border-slate-500/30";
+    }
+  };
+
   return (
-    <Section
-      id="projects"
-      title="Projets"
-      subtitle="Réalisations techniques et applications développées"
-    >
-      <div className="grid md:grid-cols-2 gap-6">
-        {projects.map((project, index) => (
-          <Card key={index} hover>
-            <div className="flex flex-col h-full">
-              {project.featured && (
-                <span className="inline-block w-fit px-3 py-1 bg-gradient-to-r from-teal-500 to-cyan-500 text-white text-xs font-semibold rounded-full mb-4">
-                  Projet Majeur
-                </span>
-              )}
-
-              <h3 className="text-xl font-bold text-white mb-3">
-                {project.title}
-              </h3>
-
-              <p className="text-slate-400 mb-4 flex-grow">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.tech.map((tech, techIndex) => (
-                  <span
-                    key={techIndex}
-                    className="px-3 py-1 bg-slate-700/50 text-teal-400 rounded-full text-xs border border-slate-600"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="pt-4 border-t border-slate-700">
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group relative inline-flex items-center gap-2 w-full justify-center px-4 py-2.5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 rounded-lg text-slate-300 hover:text-white hover:border-teal-500/60 hover:bg-gradient-to-r hover:from-teal-500/15 hover:to-cyan-500/15 transition-all duration-300 overflow-hidden"
-                >
-                  {/* Effet de glow subtil */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-500"></div>
-                  
-                  {/* Contenu du bouton */}
-                  <div className="relative flex items-center gap-2">
-                    <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
-                    <span className="font-medium text-sm">Code</span>
-                    <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-                  </div>
-                  
-                  {/* Effet de brillance au hover */}
-                  <div className="absolute inset-0 -top-0.5 -left-0.5 w-0 h-0 bg-gradient-to-r from-transparent via-white/5 to-transparent group-hover:w-full group-hover:h-full transition-all duration-600 ease-out"></div>
-                </a>
-              </div>
-            </div>
-          </Card>
-        ))}
+    <section id="projects" className="relative py-24 bg-slate-900 overflow-hidden">
+      {/* Halo de fond */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-teal-500 rounded-full filter blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-cyan-500 rounded-full filter blur-3xl animate-pulse delay-1000" />
       </div>
 
-      {/* --- Section Voir tous les projets --- */}
-      <div className="mt-12 text-center">
-        <div className="relative max-w-sm mx-auto">
-          {/* Carte principale */}
-          <div className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-5 shadow-lg shadow-slate-900/30">
-            <div className="flex items-center justify-center gap-3 mb-3">
-              {/* Icône GitHub */}
-              <div className="w-10 h-10 bg-gradient-to-br from-teal-500 to-cyan-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(45,255,196,0.3)]">
-                <Github size={20} className="text-white" />
-              </div>
-              
-              {/* Titre */}
-              <h3 className="text-lg font-bold text-white">
-                Voir <span className="text-teal-400">tous les projets</span>
-              </h3>
-            </div>
-            
-            {/* Description */}
-            <p className="text-slate-400 text-sm mb-4">
-              Explorez mon portfolio complet sur GitHub
-            </p>
+      <div className="relative container mx-auto px-6 lg:px-12">
+        {/* Titre */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center space-y-4 mb-16"
+        >
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            Projets <span className="text-teal-400">Techniques</span>
+          </h2>
+          <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
+          <p className="text-slate-300 text-sm max-w-xl mx-auto">
+            Réalisations concrètes combinant sécurité, performance et innovation.
+          </p>
+        </motion.div>
 
-            {/* Bouton GitHub */}
-            <a
-              href="https://github.com/Azzammoo10"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative inline-flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-medium rounded-lg shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 hover:scale-105 transition-all duration-300"
-            >
-              <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
-              <span>GitHub</span>
-              <ExternalLink size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
-            </a>
-          </div>
+        {/* Grille de projets */}
+        <motion.div layout className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+          <AnimatePresence mode="sync">
+            {projects.slice(0, visibleCount).map((project) => (
+              <motion.div
+                key={project.title}
+                layout
+                initial={{ opacity: 0, y: 40, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -20, scale: 0.95 }}
+                transition={{
+                  duration: 0.35,
+                  ease: "easeOut",
+                }}
+                className="group relative"
+              >
+                <div className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 hover:border-teal-500/60 hover:shadow-[0_0_30px_rgba(45,255,196,0.2)] transition-all duration-400 hover:-translate-y-2 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-700" />
+                  <div className="relative z-10 flex flex-col h-full">
+                    {/* Titre et statut */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className={`p-3 bg-gradient-to-br ${project.color}/20 rounded-xl`}
+                        >
+                          <Github
+                            className="h-6 w-6 text-cyan-400 group-hover:rotate-6 transition-transform"
+                            strokeWidth={1.6}
+                          />
+                        </div>
+                        <h3 className="text-lg font-bold text-white">{project.title}</h3>
+                      </div>
+                      <span
+                        className={`text-xs px-2 py-1 bg-gradient-to-r ${getStatusStyle(
+                          project.status
+                        )} rounded-full border font-medium transition-all duration-300 group-hover:scale-105`}
+                      >
+                        {project.status}
+                      </span>
+                    </div>
+
+                    <p className="text-slate-400 text-sm mb-4 flex-grow leading-relaxed">
+                      {project.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-1.5 mb-6">
+                      {project.tech.map((tech, techIndex) => (
+                        <span
+                          key={techIndex}
+                          className="px-2 py-1 bg-slate-700/50 text-cyan-400 rounded-full text-xs border border-slate-600/50"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 rounded-lg text-slate-300 hover:text-white hover:border-teal-500/60 hover:bg-gradient-to-r hover:from-teal-500/15 hover:to-cyan-500/15 transition-all duration-300 overflow-hidden"
+                    >
+                      <div className="relative flex items-center gap-2">
+                        <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
+                        <span className="font-medium text-sm">Code</span>
+                        <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Bouton "Afficher plus / moins" */}
+        <div className="text-center mt-10">
+          <motion.button
+            onClick={toggleVisible}
+            whileHover={{ scale: 1.07 }}
+            whileTap={{ scale: 0.95 }}
+            animate={{ opacity: 1, scale: [0.95, 1] }}
+            transition={{ duration: 0.3 }}
+            className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            <span className="relative z-10">
+              {visibleCount === 3 ? "Afficher plus" : "Afficher moins"}
+            </span>
+          </motion.button>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
