@@ -86,11 +86,11 @@ export function Projects() {
   };
 
   return (
-    <section id="projects" className="relative py-24 bg-slate-900 overflow-hidden">
+    <section id="projects"  className="relative py-24 bg-[#081220] overflow-hidden">
       {/* Halo de fond */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-teal-500 rounded-full filter blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-cyan-500 rounded-full filter blur-3xl animate-pulse delay-1000" />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
       </div>
 
       <div className="relative container mx-auto px-6 lg:px-12">
@@ -101,8 +101,8 @@ export function Projects() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Projets <span className="text-teal-400">Techniques</span>
+          <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+            Projets <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Techniques</span>
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
           <p className="text-slate-300 text-sm max-w-xl mx-auto">

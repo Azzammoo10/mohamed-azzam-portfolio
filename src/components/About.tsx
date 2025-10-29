@@ -37,9 +37,13 @@ export function About() {
   return (
     <section
       id="about"
-      className="py-16 md:py-20 px-6 bg-slate-900"
+      className="relative py-24 bg-[#081220] overflow-hidden"
       aria-label="À propos"
     >
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
+      </div>
       <div className="max-w-6xl mx-auto">
         {/* Titre */}
         <div className="text-center mb-10 md:mb-12">
@@ -48,9 +52,9 @@ export function About() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.4 }}
-            className="text-3xl md:text-4xl font-bold text-white tracking-tight"
+            className="text-4xl font-extrabold text-white mb-3 tracking-tight"
           >
-            À <span className="text-teal-400">Propos</span>
+            À <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Propos</span>
           </motion.h2>
 
           <motion.p

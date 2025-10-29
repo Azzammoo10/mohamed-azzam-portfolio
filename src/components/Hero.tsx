@@ -10,7 +10,7 @@ export function Hero() {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  // --- Effet particules de fond ---
+  // --- Canvas Particules ---
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -22,17 +22,17 @@ export function Hero() {
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      particles = Array.from({ length: 60 }).map(() => ({
+      particles = Array.from({ length: 75 }).map(() => ({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
       }));
     };
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = "rgba(0,255,204,0.15)";
+      ctx.strokeStyle = "rgba(0,255,204,0.08)";
       ctx.lineWidth = 1;
 
       // --- Relier les points proches ---
@@ -43,7 +43,7 @@ export function Hero() {
           const dx = p1.x - p2.x;
           const dy = p1.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 140) {
+          if (dist < 120) {
             ctx.beginPath();
             ctx.moveTo(p1.x, p1.y);
             ctx.lineTo(p2.x, p2.y);
@@ -53,14 +53,13 @@ export function Hero() {
       }
 
       // --- Dessiner les particules ---
-      ctx.fillStyle = "rgba(0,255,204,0.8)";
+      ctx.fillStyle = "rgba(0,255,204,0.9)";
       for (const p of particles) {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 1.8, 0, Math.PI * 2);
         ctx.fill();
         p.x += p.vx;
         p.y += p.vy;
-
         if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
         if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
       }
@@ -74,48 +73,47 @@ export function Hero() {
   }, []);
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-[#050C17] text-white">
+    <section className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-[#081220] via-[#0A1825] to-[#0B1F2B] text-white">
       {/* --- Canvas Particules --- */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full opacity-70 pointer-events-none"
-      />
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70 pointer-events-none" />
 
-      {/* --- Halo et couches néon --- */}
+      {/* --- Halo néon animé --- */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-teal-500/20 blur-[160px] rounded-full animate-pulse" />
+        <div className="absolute top-1/3 left-1/3 w-[300px] h-[300px] bg-teal-400/20 blur-[160px] rounded-full animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-[250px] h-[250px] bg-cyan-400/25 blur-[140px] rounded-full animate-pulse delay-700" />
       </div>
 
       {/* --- Contenu principal --- */}
       <div className="relative z-10 text-center max-w-3xl mx-auto px-6">
-        {/* --- Icône Sécurité --- */}
+        {/* --- Icône cadenas animé --- */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="flex justify-center mb-6"
         >
           <motion.div
             animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 5 }}
-            className="text-teal-400"
+            transition={{ repeat: Infinity, duration: 4 }}
+            className="text-teal-400 drop-shadow-[0_0_8px_rgba(0,255,204,0.6)]"
           >
-            <Lock size={42} className="drop-shadow-[0_0_8px_rgba(0,255,204,0.5)]" />
+            <Lock size={46} />
           </motion.div>
         </motion.div>
 
-        {/* --- Titre principal --- */}
+        {/* --- Nom --- */}
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight tracking-tight"
         >
-          <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,255,204,0.3)]">
-            Mohamed Azzam
+          <span className="text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]">Mohamed</span>{" "}
+          <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-emerald-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(0,255,204,0.4)]">
+            AZZAM
           </span>
         </motion.h1>
+
 
         {/* --- Sous-titre --- */}
         <motion.p
@@ -134,15 +132,14 @@ export function Hero() {
           transition={{ duration: 0.9, delay: 0.4 }}
           className="text-slate-400 text-sm sm:text-base md:text-lg leading-relaxed mb-8"
         >
-          Spécialisé dans la protection des systèmes, la sécurité offensive et la conception
-          d’applications fiables.
+          Axé sur la conception d’applications performantes et sécurisées, avec un intérêt particulier pour la protection des systèmes et la sécurité applicative.
           <br />
           <span className="text-cyan-400 font-medium">
             Recherche d’un stage de fin d’études (6 mois — Février/Mars 2026)
           </span>
         </motion.p>
 
-        {/* --- Boutons --- */}
+        {/* --- Boutons avec effet glassmorphism --- */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -152,7 +149,7 @@ export function Hero() {
           <Button
             variant="primary"
             icon={<Download size={18} />}
-            className="hover:scale-105 transition-transform shadow-[0_0_20px_rgba(0,255,204,0.3)] active:scale-95"
+            className="backdrop-blur-md bg-gradient-to-r from-teal-500/30 to-cyan-500/30 border border-teal-400/40 shadow-[0_0_25px_rgba(0,255,204,0.25)] hover:scale-105 hover:shadow-[0_0_40px_rgba(0,255,204,0.5)] transition-all duration-300 active:scale-95"
             onClick={() => {
               const link = document.createElement("a");
               link.href = "/Mohamed_Azzam_CV.pdf";
@@ -167,13 +164,13 @@ export function Hero() {
             variant="outline"
             icon={<Mail size={18} />}
             onClick={() => scrollToSection("#contact")}
-            className="hover:scale-105 transition-transform hover:shadow-[0_0_20px_rgba(0,255,204,0.25)] active:scale-95"
+            className="backdrop-blur-md border border-cyan-400/40 hover:bg-cyan-400/10 hover:shadow-[0_0_30px_rgba(0,255,204,0.3)] transition-all duration-300 active:scale-95"
           >
             Me Contacter
           </Button>
         </motion.div>
 
-        {/* --- Réseaux sociaux --- */}
+        {/* --- Réseaux sociaux avec effet lueur --- */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -190,31 +187,31 @@ export function Hero() {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-teal-400 transition-transform duration-300 hover:scale-125"
+              className="text-slate-400 hover:text-cyan-400 hover:drop-shadow-[0_0_10px_rgba(0,255,204,0.6)] transition-transform duration-300 hover:scale-125"
             >
               {icon}
             </a>
           ))}
         </motion.div>
 
-        {/* --- Terminal Desktop / Mobile Message --- */}
+        {/* --- Terminal / texte dynamique --- */}
         <div className="hidden md:flex justify-center mt-6">
           <TerminalPanel />
         </div>
-        <div className="md:hidden text-teal-400 text-sm font-mono animate-pulse mt-6">
-          Initialisation du pare-feu sécurisé...
+        <div className="md:hidden text-cyan-400 text-sm font-mono animate-pulse mt-6">
+          Chargement du profil sécurisé...
         </div>
       </div>
 
-      {/* --- Indicateur Scroll --- */}
+      {/* --- Indicateur scroll avec lumière pulsante --- */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1, duration: 1 }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
       >
-        <div className="w-6 h-10 border-2 border-teal-400 rounded-full flex justify-center p-2 shadow-[0_0_12px_rgba(0,255,204,0.4)]">
-          <div className="w-1 h-3 bg-teal-400 rounded-full" />
+        <div className="w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center p-2 shadow-[0_0_12px_rgba(0,255,204,0.4)]">
+          <div className="w-1 h-3 bg-gradient-to-b from-cyan-400 to-teal-500 rounded-full animate-pulse" />
         </div>
       </motion.div>
     </section>

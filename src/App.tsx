@@ -23,13 +23,9 @@ function App() {
 
       <Skills />
       <Experience />
-
       <Projects />
-
       <CertificationsSection />
-
       <EducationSection/>
-
       <Contact />
       <Footer />
     </div>

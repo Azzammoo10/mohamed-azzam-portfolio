@@ -72,8 +72,8 @@ export function Experience() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Expérience <span className="text-cyan-400">Professionnelle</span>
+          <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+            Expérience <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Professionnelle</span>
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
           <p className="text-slate-300 text-sm max-w-xl mx-auto">

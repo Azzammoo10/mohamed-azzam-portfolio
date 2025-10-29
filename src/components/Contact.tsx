@@ -1,6 +1,6 @@
 import { Card } from "./Card";
 import { Button } from "./Button";
-import { Mail, MapPin, Github, Linkedin, Send, CheckCircle, Phone } from "lucide-react";
+import { Mail, MapPin, Linkedin, Send, CheckCircle, Phone } from "lucide-react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -47,13 +47,16 @@ export function Contact() {
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 bg-slate-900 relative overflow-hidden">
+    <section id="contact"       className="relative py-24 bg-[#081220] overflow-hidden">
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
+      </div>
       <div className="max-w-6xl mx-auto">
         {/* --- Titre --- */}
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            <span className="text-teal-400">Contact</span>
-          </h2>
+          <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+<span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Contact</span>          </h2>
           <p className="text-slate-300 text-lg">Restons en contact</p>
         </div>
 

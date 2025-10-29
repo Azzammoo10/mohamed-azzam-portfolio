@@ -29,12 +29,13 @@ export function EducationSection() {
   return (
     <section
       id="education"
-      className="relative py-24 bg-slate-900 overflow-hidden"
+            className="relative py-24 bg-[#081220] overflow-hidden"
+
     >
       {/* --- Effet de halo cyber créatif --- */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-teal-500 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
       </div>
 
       <div className="relative container mx-auto px-6 lg:px-12">
@@ -45,8 +46,8 @@ export function EducationSection() {
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Parcours <span className="text-teal-400">Académique</span>
+          <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+            Parcours <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Académique</span>
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
           <p className="text-slate-300 text-sm max-w-xl mx-auto">
