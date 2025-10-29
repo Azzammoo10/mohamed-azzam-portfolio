@@ -1,187 +1,190 @@
-import {  Calendar, MapPin, Code, Users, Building2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+"use client";
+import { LogoBadge } from "./LogoBadge"; // adapte le chemin
+import { Calendar, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 
 export function Experience() {
   const experiences = [
     {
-      year: '2025',
-      company: 'SQLI Digital Centre',
-      role: 'Stagiaire Ingénieur Développement Web',
-      location: 'Rabat',
-      period: '06/2025 - 08/2025',
-      type: 'Stage Ingénieur',
-      duration: '2 mois',
+      year: "2025",
+      company: "SQLI Digital Centre",
+      role: "Stagiaire Ingénieur Développement Web",
+      location: "Rabat",
+      period: "06/2025 - 08/2025",
+      type: "Stage Ingénieur",
+      duration: "2 mois",
+      logo: "/logos/sqli.png",
       achievements: [
-        'Développement d\'un portail web de suivi des projets clients en Spring Boot, React.js, PostgreSQL',
-        'Conception du portail : UML, modélisation de la base de données, maquettage avec Figma',
-        'Fonctionnalités clés : dashboard, rôles, historique, PDF, notifications temps réel, QR Code'
+        "Développement d’un portail web de suivi des projets clients (Spring Boot, React.js, PostgreSQL).",
+        "Conception UML, modélisation de la base de données, maquettes Figma.",
+        "Dashboard, rôles, historique, PDF, notifications temps réel et QR Code.",
       ],
-      tech: ['Spring Boot', 'React.js', 'PostgreSQL', 'Figma'],
-      icon: <Code className="h-6 w-6 text-teal-400" />,
-      color: 'from-teal-500 to-cyan-500'
+      tech: ["Spring Boot", "React.js", "PostgreSQL", "Figma"],
     },
     {
-      year: '2024',
-      company: 'ThreeComp',
-      role: 'Stagiaire Développeur Full-Stack',
-      location: 'Rabat',
-      period: '08/2023 - 09/2023',
-      type: 'Stage Développement',
-      duration: '2 mois',
+      year: "2024",
+      company: "ThreeComp",
+      role: "Stagiaire Développeur Full-Stack",
+      location: "Rabat",
+      period: "08/2023 - 09/2023",
+      type: "Stage Développement",
+      duration: "2 mois",
+      logo: "/logos/threecomp.png",
       achievements: [
-        'Développement d\'une application web en Django/MySQL avec interface responsive',
-        'Création d\'interfaces utilisateur modernes et intuitives'
+        "Développement d’une application web Django/MySQL avec interface responsive.",
+        "Création d’interfaces modernes et intuitives.",
       ],
-      tech: ['Django', 'MySQL', 'Python'],
-      icon: <Users className="h-6 w-6 text-cyan-400" />,
-      color: 'from-cyan-500 to-blue-500'
+      tech: ["Django", "MySQL", "Python"],
     },
     {
-      year: '2023',
-      company: 'Novec',
-      role: 'Stagiaire Réseaux - Stage BTS',
-      location: 'Technopolis Rabat',
-      period: '06/2023 - 07/2023',
-      type: 'Stage Réseaux',
-      duration: '1 mois',
+      year: "2023",
+      company: "Novec",
+      role: "Stagiaire Réseaux – Stage BTS",
+      location: "Technopolis Rabat",
+      period: "06/2023 - 07/2023",
+      type: "Stage Réseaux",
+      duration: "1 mois",
+      logo: "/logos/novec.png",
       achievements: [
-        'Mise en place d\'une solution de supervision réseau avec Nagios et Centreon',
-        'Surveillance des services critiques et configuration d\'alertes'
+        "Mise en place d’une solution de supervision réseau (Nagios/Centreon).",
+        "Surveillance et configuration d’alertes pour services critiques.",
       ],
-      tech: ['Nagios', 'Centreon', 'Linux'],
-      icon: <Building2 className="h-6 w-6 text-blue-400" />,
-      color: 'from-blue-500 to-indigo-500'
-    }
+      tech: ["Nagios", "Centreon", "Linux"],
+    },
   ];
 
   return (
-    <section id="experience" className="relative py-24 bg-slate-900 overflow-hidden">
-      {/* --- Effet de fond professionnel --- */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/3 left-1/3 w-80 h-80 bg-blue-500 rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-indigo-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
+    <section
+      id="experience"
+      className="relative py-24 bg-[#081220] overflow-hidden"
+    >
+      {/* --- Halo cybersécurité --- */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
       </div>
 
       <div className="relative container mx-auto px-6 lg:px-12">
-        {/* --- En-tête section --- */}
-        <motion.div 
+        {/* --- Titre --- */}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           className="text-center space-y-4 mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold text-white">
-            Expérience <span className="text-teal-400">Professionnelle</span>
+            Expérience <span className="text-cyan-400">Professionnelle</span>
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
           <p className="text-slate-300 text-sm max-w-xl mx-auto">
-            Parcours professionnel et réalisations techniques en entreprise.
+            Stages techniques et projets réalisés en entreprise.
           </p>
         </motion.div>
 
-        {/* --- Grille d'expériences créative --- */}
-        <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {experiences.map((exp, index) => (
+        {/* --- Grille d’expériences --- */}
+        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+          {experiences.map((exp, i) => (
             <motion.div
-              key={index}
+              key={i}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.2 }}
               className="group relative"
             >
-              {/* --- Carte d'expérience --- */}
-              <div className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 hover:border-teal-500/60 hover:shadow-[0_0_30px_rgba(45,255,196,0.2)] transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                {/* Effet de brillance au hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-700"></div>
-                
-                <div className="relative z-10">
-                  {/* En-tête avec icône et année */}
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-3 bg-gradient-to-br ${exp.color}/20 rounded-xl`}>
-                        {exp.icon}
-                      </div>
-                      <div>
-                        <div className="text-2xl font-bold text-white">{exp.year}</div>
-                        <div className="text-xs text-slate-400">{exp.duration}</div>
-                      </div>
-                    </div>
-                    <span className="text-xs px-2 py-1 bg-slate-700/50 text-slate-300 rounded-full border border-slate-600/50">
-                      {exp.type}
-                    </span>
-                  </div>
+              <div className="h-full bg-slate-800/60 backdrop-blur-xl border border-slate-700/70 hover:border-cyan-400/50 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(0,255,204,0.1)] overflow-hidden">
+                {/* --- Logo circulaire + année --- */}
+                <div className="flex items-center gap-4">
+  {/* Logo rond stylé */}
+  <LogoBadge src={exp.logo} alt={exp.company} />
 
-                  {/* Entreprise et localisation */}
-                  <div className="mb-4">
-                    <h3 className="text-lg font-bold text-white mb-1">{exp.company}</h3>
-                    <div className="flex items-center gap-2 text-slate-400 text-sm">
-                      <MapPin size={14} className="text-cyan-400" />
-                      <span>{exp.location}</span>
-                    </div>
-                  </div>
+  {/* Année et durée */}
+  <div>
+    <div className="text-2xl font-bold text-white">{exp.year}</div>
+    <div className="text-xs text-slate-400">{exp.duration}</div>
+  </div>
+</div>
 
-                  {/* Poste */}
-                  <div className="mb-4">
-                    <h4 className="text-slate-200 font-semibold text-base mb-2">{exp.role}</h4>
-                    <div className="flex items-center gap-2 text-slate-400 text-sm">
-                      <Calendar size={14} className="text-teal-400" />
-                      <span>{exp.period}</span>
-                    </div>
-                  </div>
 
-                  {/* Réalisations */}
-                  <div className="mb-4">
-                    <h5 className="text-slate-300 font-medium text-sm mb-2">Réalisations clés :</h5>
-                    <ul className="space-y-1">
-                      {exp.achievements.map((achievement, achIndex) => (
-                        <li key={achIndex} className="text-slate-400 text-xs leading-relaxed flex items-start gap-2">
-                          <span className="text-teal-400 mt-1">•</span>
-                          <span>{achievement}</span>
-                        </li>
-                      ))}
-                    </ul>
+                {/* --- Entreprise & Lieu --- */}
+                <div className="mb-4">
+                  <h3 className="text-lg font-semibold text-white mb-1">
+                    {exp.company}
+                  </h3>
+                  <div className="flex items-center gap-2 text-slate-400 text-sm">
+                    <MapPin size={14} className="text-cyan-400" />
+                    <span>{exp.location}</span>
                   </div>
+                </div>
 
-                  {/* Technologies */}
-                  <div className="flex flex-wrap gap-1.5">
-                    {exp.tech.map((tech, techIndex) => (
-                      <span
-                        key={techIndex}
-                        className="px-2 py-1 bg-slate-700/50 text-cyan-400 rounded-full text-xs border border-slate-600/50"
+                {/* --- Poste --- */}
+                <div className="mb-4">
+                  <h4 className="text-slate-200 font-medium text-base mb-2">
+                    {exp.role}
+                  </h4>
+                  <div className="flex items-center gap-2 text-slate-400 text-sm">
+                    <Calendar size={14} className="text-teal-400" />
+                    <span>{exp.period}</span>
+                  </div>
+                </div>
+
+                {/* --- Réalisations --- */}
+                <div className="mb-4">
+                  <h5 className="text-slate-300 font-medium text-sm mb-2">
+                    Réalisations clés :
+                  </h5>
+                  <ul className="space-y-1">
+                    {exp.achievements.map((a, j) => (
+                      <li
+                        key={j}
+                        className="text-slate-400 text-xs flex items-start gap-2 leading-relaxed"
                       >
-                        {tech}
-                      </span>
+                        <span className="text-cyan-400 mt-1">•</span>
+                        <span>{a}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
+                </div>
+
+                {/* --- Technologies --- */}
+                <div className="flex flex-wrap gap-2">
+                  {exp.tech.map((t, k) => (
+                    <span
+                      key={k}
+                      className="px-2 py-1 bg-slate-700/40 text-cyan-400 rounded-full text-xs border border-slate-600/50"
+                    >
+                      {t}
+                    </span>
+                  ))}
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* --- Section statistiques professionnelles --- */}
+        {/* --- Statistiques dynamiques --- */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto"
+          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto text-center"
         >
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-teal-400">4</div>
-            <div className="text-sm text-slate-400">Stages</div>
-          </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-cyan-400">7+</div>
-            <div className="text-sm text-slate-400">Mois</div>
-          </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-blue-400">8+</div>
-            <div className="text-sm text-slate-400">Technologies</div>
-          </div>
-          <div className="text-center p-4 bg-slate-800/40 rounded-xl border border-slate-700/50">
-            <div className="text-2xl font-bold text-indigo-400">70%</div>
-            <div className="text-sm text-slate-400">Satisfaction</div>
-          </div>
+          {[
+            { value: "4", label: "Stages", color: "text-teal-400" },
+            { value: "7+", label: "Mois", color: "text-cyan-400" },
+            { value: "8+", label: "Technologies", color: "text-blue-400" },
+            { value: "70%", label: "Satisfaction", color: "text-indigo-400" },
+          ].map((stat, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ scale: 1.05 }}
+              className="p-4 bg-slate-800/40 rounded-xl border border-slate-700/50"
+            >
+              <div className={`text-2xl font-bold ${stat.color}`}>
+                {stat.value}
+              </div>
+              <div className="text-sm text-slate-400">{stat.label}</div>
+            </motion.div>
+          ))}
         </motion.div>
       </div>
     </section>

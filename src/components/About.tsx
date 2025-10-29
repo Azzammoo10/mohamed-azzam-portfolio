@@ -1,133 +1,153 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Card } from "./Card";
 import { Shield, Code, Network, Award } from "lucide-react";
 
 export function About() {
+  const shouldReduce = useReducedMotion();
+
   const strengths = [
     {
-      icon: <Shield className="text-teal-400" size={32} />,
+      icon: <Shield className="text-teal-400" size={28} />,
       title: "Cybersécurité",
       description:
-        "Protection des applications avec JWT, Spring Security et chiffrement SHA-256.",
+        "Protection d’applications : Spring Security, JWT, chiffrement (SHA-256).",
     },
     {
-      icon: <Code className="text-cyan-400" size={32} />,
-      title: "Développement Sécurisé",
-      description: "Full-stack : Spring Boot, React.js, Django, et .NET.",
+      icon: <Code className="text-cyan-400" size={28} />,
+      title: "Dev sécurisé",
+      description: "Full-stack : Spring Boot, React, Django, .NET (bonnes pratiques).",
     },
     {
-      icon: <Network className="text-teal-400" size={32} />,
-      title: "Réseaux & Supervision",
-      description: "CCNA, Cisco Packet Tracer, Nagios, Nmap, Wireshark.",
+      icon: <Network className="text-teal-400" size={28} />,
+      title: "Réseaux & supervision",
+      description: "CCNA, Packet Tracer, Nmap, Wireshark, Nagios.",
     },
     {
-      icon: <Award className="text-cyan-400" size={32} />,
+      icon: <Award className="text-cyan-400" size={28} />,
       title: "Certifications",
-      description: "NSE 1 Fortinet, CCNAv7, Linux, Security+ (en cours).",
+      description: "NSE 1, CCNAv7, Linux, Security+ (en cours).",
     },
   ];
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: shouldReduce ? 0 : 18 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  };
+
   return (
-    <section id="about" className="py-20 px-6 bg-slate-900 overflow-hidden">
+    <section
+      id="about"
+      className="py-16 md:py-20 px-6 bg-slate-900"
+      aria-label="À propos"
+    >
       <div className="max-w-6xl mx-auto">
-        {/* --- Titre --- */}
-        <div className="text-center mb-12">
+        {/* Titre */}
+        <div className="text-center mb-10 md:mb-12">
           <motion.h2
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="text-3xl md:text-4xl font-bold text-white mb-4"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="text-3xl md:text-4xl font-bold text-white tracking-tight"
           >
             À <span className="text-teal-400">Propos</span>
           </motion.h2>
+
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-slate-300 text-lg"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.4 }}
+            className="text-slate-300 text-base md:text-lg mt-3"
           >
-            Ingénieur en formation avec une passion pour la sécurité informatique
+            Ingénieur en formation, passionné par la sécurité et le développement
+            d’applications fiables.
           </motion.p>
         </div>
 
-        {/* --- IMAGE + TEXTE --- */}
-        <div className="grid md:grid-cols-2 gap-10 items-center mb-12">
-          {/* --- IMAGE --- */}
+        {/* Image + Texte */}
+        <div className="grid md:grid-cols-2 gap-10 items-center mb-12 md:mb-14">
+          {/* Image */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             className="flex justify-center"
           >
-            <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full overflow-hidden border-4 border-teal-500/70 shadow-[0_0_40px_rgba(45,255,196,0.25)] hover:shadow-[0_0_60px_rgba(45,255,196,0.45)] transition-all duration-500">
+            <div className="relative w-48 h-48 sm:w-60 sm:h-60 md:w-64 md:h-64 rounded-full overflow-hidden border border-teal-500/40 shadow-[0_0_32px_rgba(45,255,196,0.12)]">
               <img
                 src="/DSC_4573.jpg"
                 alt="Portrait de Mohamed Azzam"
-                className="object-cover w-full h-full scale-105 hover:scale-110 transition-transform duration-700 ease-out"
+                loading="lazy"
+                className="object-cover w-full h-full"
               />
-              {/* halo animé */}
-              <motion.div
-                animate={{
-                  opacity: [0.2, 0.6, 0.2],
-                  scale: [1, 1.05, 1],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="absolute inset-0 rounded-full bg-gradient-to-tr from-teal-500/20 to-cyan-400/20 blur-2xl"
-              />
+              {/* halo discret */}
+              <div className="pointer-events-none absolute inset-0 rounded-full bg-teal-500/10 blur-2xl" />
             </div>
           </motion.div>
 
-          {/* --- TEXTE --- */}
+          {/* Texte */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
             className="text-center md:text-left"
           >
-            <h3 className="text-2xl font-bold text-white mb-4">Mohamed Azzam</h3>
-            <p className="text-slate-300 mb-4 leading-relaxed">
-              Étudiant en dernière année d'ingénierie à l'EMSI Rabat (spécialisation MIAGE),
-              passionné par la cybersécurité et le développement sécurisé.
+            <h3 className="text-xl md:text-2xl font-semibold text-white mb-3">
+              Mohamed Azzam
+            </h3>
+
+            <p className="text-slate-300 leading-relaxed mb-3">
+              Étudiant en dernière année (EMSI Rabat – MIAGE), je conçois des
+              applications en intégrant la sécurité dès la conception
+              (authentification, contrôle d’accès, chiffrement, logs).
             </p>
-            <p className="text-slate-300 mb-4 leading-relaxed">
-              Grâce à une formation polyvalente et à plusieurs projets concrets en Java, .NET,
-              C++, et supervision réseau, j'ai développé une expertise solide en sécurité des
-              systèmes d'information.
+
+            <p className="text-slate-300 leading-relaxed mb-3">
+              Projets concrets en Java/Spring Boot, .NET, Python/Django et supervision réseau.
+              J’applique des pratiques fiables et conformes aux bonnes normes (OWASP, tests, observabilité).
             </p>
-            <p className="text-teal-400 font-semibold">
-              Recherche active : Stage PFE de 6 mois (Février/Mars 2026)
+
+            <p className="text-teal-400 font-medium">
+              Objectif : Stage PFE de 6 mois (Février/Mars 2026) – Analyste
+              sécurité / Pentest / DevSecOps.
             </p>
           </motion.div>
         </div>
 
-        {/* --- COMPÉTENCES --- */}
+        {/* Séparateur discret */}
+        <div className="h-px w-full bg-gradient-to-r from-transparent via-slate-700/50 to-transparent mb-10" />
+
+        {/* Cartes de compétences */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          viewport={{ once: true }}
-          className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6"
         >
-          {strengths.map((strength, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05, y: -5 }}
-              transition={{ type: "spring", stiffness: 200, damping: 12 }}
+          {strengths.map((s, i) => (
+            <Card
+              key={i}
+              className="
+                group h-full p-5 md:p-6 rounded-2xl
+                bg-slate-800/40 border border-slate-700/50
+                transition-all duration-300
+                hover:border-teal-500/40 hover:shadow-[0_0_22px_rgba(45,255,196,0.18)]
+              "
             >
-              <Card className="text-center bg-slate-800/40 border border-slate-700/50 p-6 rounded-2xl hover:shadow-[0_0_25px_rgba(45,255,196,0.25)] transition-all duration-500">
-                <div className="flex justify-center mb-4">{strength.icon}</div>
-                <h4 className="text-lg font-semibold text-white mb-2">
-                  {strength.title}
+              <div className="flex items-center gap-3 mb-3">
+                <div className="shrink-0">{s.icon}</div>
+                <h4 className="text-white font-semibold text-base md:text-lg">
+                  {s.title}
                 </h4>
-                <p className="text-slate-400 text-sm">{strength.description}</p>
-              </Card>
-            </motion.div>
+              </div>
+              <p className="text-slate-400 text-sm leading-relaxed">
+                {s.description}
+              </p>
+            </Card>
           ))}
         </motion.div>
       </div>
