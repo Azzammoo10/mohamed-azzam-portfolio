@@ -199,56 +199,64 @@ export function Contact() {
           </div>
 
           {/* --- Informations --- */}
-          <div>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">
-              Informations de contact
-            </h3>
-            <div className="space-y-3 sm:space-y-4">
-  {contactInfo.map((info, index) => (
-    <Card
-      key={index}
-      hover={!!info.link}
-      className="bg-slate-800/40 border border-slate-700/50 hover:border-teal-400/30 transition px-4 py-4 rounded-xl shadow-sm"
-    >
-      {info.link ? (
-        <a
-          href={info.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-3 sm:gap-4"
-        >
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-400/20">
-            {info.icon}
+          {/* --- Informations --- */}
+<div>
+  <h3 className="text-xl sm:text-2xl font-bold text-white mb-6">
+    Informations de contact
+  </h3>
+
+  <div className="space-y-3 sm:space-y-4">
+    {contactInfo.map((info, index) => (
+      <Card
+        key={index}
+        className="bg-slate-800/40 border border-slate-700/50 
+                   px-4 py-4 rounded-xl shadow-sm"
+      >
+        {info.link ? (
+          <a
+            href={info.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 sm:gap-4"
+          >
+            <div className="flex items-center justify-center w-10 h-10 
+                            rounded-full bg-gradient-to-r 
+                            from-teal-500/10 to-cyan-500/10 
+                            border border-teal-400/20">
+              {info.icon}
+            </div>
+            <div>
+              <h4 className="text-white font-semibold text-sm sm:text-base mb-0.5">
+                {info.label}
+              </h4>
+              <p className="text-slate-400 text-xs sm:text-sm">
+                {info.value}
+              </p>
+            </div>
+          </a>
+        ) : (
+          <div className="flex items-center gap-3 sm:gap-4">
+            <div className="flex items-center justify-center w-10 h-10 
+                            rounded-full bg-gradient-to-r 
+                            from-teal-500/10 to-cyan-500/10 
+                            border border-teal-400/20">
+              {info.icon}
+            </div>
+            <div>
+              <h4 className="text-white font-semibold text-sm sm:text-base mb-0.5">
+                {info.label}
+              </h4>
+              <p className="text-slate-400 text-xs sm:text-sm">
+                {info.value}
+              </p>
+            </div>
           </div>
-          <div>
-            <h4 className="text-white font-semibold text-sm sm:text-base mb-0.5">
-              {info.label}
-            </h4>
-            <p className="text-slate-400 text-xs sm:text-sm hover:text-teal-400 transition-colors duration-200">
-              {info.value}
-            </p>
-          </div>
-        </a>
-      ) : (
-        <div className="flex items-center gap-3 sm:gap-4">
-          <div className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-r from-teal-500/10 to-cyan-500/10 border border-teal-400/20">
-            {info.icon}
-          </div>
-          <div>
-            <h4 className="text-white font-semibold text-sm sm:text-base mb-0.5">
-              {info.label}
-            </h4>
-            <p className="text-slate-400 text-xs sm:text-sm">
-              {info.value}
-            </p>
-          </div>
-        </div>
-      )}
-    </Card>
-  ))}
+        )}
+      </Card>
+    ))}
+  </div>
 </div>
 
-          </div>
         </div>
 
         

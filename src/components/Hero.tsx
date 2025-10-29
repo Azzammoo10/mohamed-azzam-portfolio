@@ -1,4 +1,4 @@
-import { Download, Github, Linkedin, Mail, Lock } from "lucide-react";
+import { Download, Github, Linkedin, Mail, Lock, ShieldCheck } from "lucide-react";
 import { Button } from "./Button";
 import { TerminalPanel } from "./TerminalPanel";
 import { motion } from "framer-motion";
@@ -85,7 +85,7 @@ export function Hero() {
 
       {/* --- Contenu principal --- */}
       <div className="relative z-10 text-center max-w-3xl mx-auto px-6">
-        {/* --- Icône cadenas animé --- */}
+        {/* --- Icône sécurité dynamique --- */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -93,13 +93,14 @@ export function Hero() {
           className="flex justify-center mb-6"
         >
           <motion.div
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ repeat: Infinity, duration: 4 }}
-            className="text-teal-400 drop-shadow-[0_0_8px_rgba(0,255,204,0.6)]"
+            animate={{ rotate: [0, 6, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+            className="text-cyan-400 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]"
           >
-            <Lock size={46} />
+            <ShieldCheck size={34} strokeWidth={2.5} />
           </motion.div>
         </motion.div>
+
 
         {/* --- Nom --- */}
         <motion.h1
