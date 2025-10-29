@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+
 
 export function Projects() {
   const projects = [
@@ -70,6 +72,8 @@ export function Projects() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(3);
+  const shouldReduce = useReducedMotion();
+
   const toggleVisible = () => {
     setVisibleCount(visibleCount === 3 ? projects.length : 3);
   };
@@ -89,7 +93,7 @@ export function Projects() {
     <section id="projects"  className="relative py-24 bg-[#081220] overflow-hidden">
       {/* Halo de fond */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[120px] rounded-full"></div>
         <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
       </div>
 
@@ -98,7 +102,7 @@ export function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.4, ease: "easeOut" }}
           className="text-center space-y-4 mb-16"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -115,18 +119,16 @@ export function Projects() {
           <AnimatePresence mode="sync">
             {projects.slice(0, visibleCount).map((project) => (
               <motion.div
-                key={project.title}
-                layout
-                initial={{ opacity: 0, y: 40, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                transition={{
-                  duration: 0.35,
-                  ease: "easeOut",
-                }}
-                className="group relative"
-              >
-                <div className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 hover:border-teal-500/60 hover:shadow-[0_0_30px_rgba(45,255,196,0.2)] transition-all duration-400 hover:-translate-y-2 overflow-hidden">
+                  key={project.title}
+                  layout
+                  initial={shouldReduce ? false : { opacity: 0, y: 25 }}
+                  animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
+                  exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  className="group relative"
+                >
+
+                <div className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 hover:border-teal-500/60 hover:shadow-[0_0_15px_rgba(45,255,196,0.15)] transition-all duration-400 hover:-translate-y-2 overflow-hidden">
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-700" />
                   <div className="relative z-10 flex flex-col h-full">
                     {/* Titre et statut */}
@@ -192,7 +194,7 @@ export function Projects() {
             whileHover={{ scale: 1.07 }}
             whileTap={{ scale: 0.95 }}
             animate={{ opacity: 1, scale: [0.95, 1] }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
             className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />

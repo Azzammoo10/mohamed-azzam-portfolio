@@ -1,4 +1,4 @@
-import { Download, Github, Linkedin, Mail, Lock, ShieldCheck } from "lucide-react";
+import { Download, Github, Linkedin, Mail, ShieldCheck } from "lucide-react";
 import { Button } from "./Button";
 import { TerminalPanel } from "./TerminalPanel";
 import { motion } from "framer-motion";

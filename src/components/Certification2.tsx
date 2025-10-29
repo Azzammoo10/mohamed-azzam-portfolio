@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Award, CheckCircle2, Clock, ExternalLink } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 export function CertificationsSection() {
   const certifications = [
@@ -23,6 +23,8 @@ export function CertificationsSection() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(6);
+  const shouldReduce = useReducedMotion();
+
   const toggleVisible = () =>
     setVisibleCount(visibleCount === 6 ? certifications.length : 6);
 
@@ -32,8 +34,8 @@ export function CertificationsSection() {
       className="relative py-24 bg-[#081220] overflow-hidden">
       {/* Halo animé */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[180px] rounded-full"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[100px] rounded-full"></div>
       </div>
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-12">
@@ -41,7 +43,7 @@ export function CertificationsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
           className="text-center space-y-4 mb-12"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -56,22 +58,23 @@ export function CertificationsSection() {
         {/* --- Liste des certifications --- */}
         <motion.div
           layout
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto"
         >
           <AnimatePresence>
             {certifications.slice(0, visibleCount).map((cert, index) => (
               <motion.div
-                key={index}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-              >
+                  key={index}
+                  layout={!shouldReduce}
+                  initial={shouldReduce ? false : { opacity: 0, y: 18 }}
+                  animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
+                  exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+
                 <Card
                   className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md 
                   transition-all duration-200 hover:border-teal-500/40 hover:-translate-y-1 
-                  hover:shadow-[0_0_20px_rgba(45,255,196,0.15)] relative overflow-hidden"
+                 hover:shadow-[0_0_12px_rgba(45,255,196,0.12)] relative overflow-hidden"
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -134,8 +137,8 @@ export function CertificationsSection() {
         <div className="text-center mt-10">
           <motion.button
             onClick={toggleVisible}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2 }}
             className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
