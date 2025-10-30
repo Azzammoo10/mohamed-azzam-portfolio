@@ -95,7 +95,7 @@ export function CertificationsSection() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto">
             {certifications.slice(0, visibleCount).map((cert, index) => (
               <div key={index}>
-                <Card className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md transition-all duration-200 hover:border-teal-500/40 hover:-translate-y-1 hover:shadow-[0_0_12px_rgba(45,255,196,0.12)] relative overflow-hidden">
+                <Card className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md relative overflow-hidden">
                   <div className="flex items-start justify-between mb-3">
                     <div>
                       <h4 className="font-semibold text-white text-sm mb-1 leading-snug">{cert.name}</h4>
@@ -113,7 +113,7 @@ export function CertificationsSection() {
                       href={cert.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden"
+                      className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 overflow-hidden"
                     >
                       <ExternalLink size={12} className="text-teal-400 group-hover:text-white transition-colors" />
                       <span className="relative z-10">Voir le certificat</span>
