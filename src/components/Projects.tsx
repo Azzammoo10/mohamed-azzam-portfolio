@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
-
 
 export function Projects() {
   const projects = [
@@ -72,7 +70,16 @@ export function Projects() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(3);
+  const [isMobile, setIsMobile] = useState(false);
   const shouldReduce = useReducedMotion();
+
+  // 🔹 Détection mobile pour ajuster la vitesse
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const toggleVisible = () => {
     setVisibleCount(visibleCount === 3 ? projects.length : 3);
@@ -89,24 +96,30 @@ export function Projects() {
     }
   };
 
+  // 🕹️ Animation speed conditionnelle
+  const animationSpeed = isMobile ? 0.2 : 0.4;
+
   return (
-    <section id="projects"  className="relative py-24 bg-[#081220] overflow-hidden">
+    <section id="projects" className="relative py-24 bg-[#081220] overflow-hidden">
       {/* Halo de fond */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-teal-500/10 blur-[120px] rounded-full"></div>
-        <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] bg-cyan-500/10 blur-[150px] rounded-full"></div>
+        <div className="absolute top-1/3 left-1/4 w-[400px] h-[400px] bg-teal-500/10 blur-[100px] rounded-full"></div>
+        <div className="absolute bottom-1/3 right-1/4 w-[350px] h-[350px] bg-cyan-500/10 blur-[90px] rounded-full"></div>
       </div>
 
       <div className="relative container mx-auto px-6 lg:px-12">
         {/* Titre */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          transition={{ duration: animationSpeed, ease: "easeOut" }}
           className="text-center space-y-4 mb-16"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
-            Projets <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Techniques</span>
+            Projets{" "}
+            <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">
+              Techniques
+            </span>
           </h2>
           <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
           <p className="text-slate-300 text-sm max-w-xl mx-auto">
@@ -115,21 +128,30 @@ export function Projects() {
         </motion.div>
 
         {/* Grille de projets */}
-        <motion.div layout className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
+        <motion.div layout className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 sm:gap-8 max-w-7xl mx-auto">
           <AnimatePresence mode="sync">
             {projects.slice(0, visibleCount).map((project) => (
               <motion.div
-                  key={project.title}
-                  layout
-                  initial={shouldReduce ? false : { opacity: 0, y: 25 }}
-                  animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
-                  exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="group relative"
-                >
+                key={project.title}
+                layout={!shouldReduce}
+                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
+                animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
+                exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
+                transition={{ duration: animationSpeed, ease: "easeOut" }}
+                className="group relative"
+              >
+                <div
+  className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 
+  rounded-2xl p-6 transition-all duration-200 ease-out 
+  hover:border-teal-500/60 hover:shadow-[0_0_15px_rgba(45,255,196,0.2)] hover:-translate-y-1.5 
+  active:scale-[0.98] overflow-hidden">
+  
+  <div
+    className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 
+    group-hover:from-teal-500/10 group-hover:via-cyan-500/5 group-hover:to-teal-500/10 
+    transition-all duration-200 ease-out"
+  />
 
-                <div className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 hover:border-teal-500/60 hover:shadow-[0_0_15px_rgba(45,255,196,0.15)] transition-all duration-400 hover:-translate-y-2 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-700" />
                   <div className="relative z-10 flex flex-col h-full">
                     {/* Titre et statut */}
                     <div className="flex items-center justify-between mb-4">
@@ -142,7 +164,9 @@ export function Projects() {
                             strokeWidth={1.6}
                           />
                         </div>
-                        <h3 className="text-lg font-bold text-white">{project.title}</h3>
+                        <h3 className="text-lg font-bold text-white">
+                          {project.title}
+                        </h3>
                       </div>
                       <span
                         className={`text-xs px-2 py-1 bg-gradient-to-r ${getStatusStyle(
@@ -172,13 +196,15 @@ export function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 rounded-lg text-slate-300 hover:text-white hover:border-teal-500/60 hover:bg-gradient-to-r hover:from-teal-500/15 hover:to-cyan-500/15 transition-all duration-300 overflow-hidden"
+className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 
+bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 
+rounded-lg text-slate-300 hover:text-white hover:border-teal-500/60 
+hover:bg-gradient-to-r hover:from-teal-500/20 hover:to-cyan-500/20 
+transition-all duration-200 ease-out overflow-hidden active:scale-[0.98]"
                     >
-                      <div className="relative flex items-center gap-2">
-                        <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
-                        <span className="font-medium text-sm">Code</span>
-                        <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
-                      </div>
+                      <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
+                      <span className="font-medium text-sm">Code</span>
+                      <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
                     </a>
                   </div>
                 </div>
@@ -191,13 +217,12 @@ export function Projects() {
         <div className="text-center mt-10">
           <motion.button
             onClick={toggleVisible}
-            whileHover={{ scale: 1.07 }}
-            whileTap={{ scale: 0.95 }}
-            animate={{ opacity: 1, scale: [0.95, 1] }}
-            transition={{ duration: 0.2 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 1.02 }}
+            transition={{ duration: 0.15, ease: "easeOut" }}
             className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
             <span className="relative z-10">
               {visibleCount === 3 ? "Afficher plus" : "Afficher moins"}
             </span>
