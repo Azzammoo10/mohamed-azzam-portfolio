@@ -161,3 +161,20 @@ html, body {
   animation: smoothBounce 2s infinite ease-in-out;
 }
 
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* Performance hints for animated elements */
+.will-change-transform {
+  will-change: transform;
+}
+.will-change-opacity {
+  will-change: opacity;
+}
+

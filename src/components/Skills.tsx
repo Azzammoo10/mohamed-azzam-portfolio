@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useMotionSettings, fadeInUpVariants, getTransition } from "../motionConfig";
 import { Card } from "./Card";
 import {
   SiPython, SiCplusplus, SiSharp, SiJavascript, SiSpringboot, SiReact, SiDjango,
@@ -61,6 +62,7 @@ function SkillBadge({ skill }: { skill: string }) {
 
 // --- Section principale ---
 export function Skills() {
+  const { isMobile, multipliers } = useMotionSettings();
   const skillCategories = [
     { category: "Langages", skills: ["Java", "Python", "C++", "C#", "JavaScript"], color: "from-teal-500 to-cyan-500" },
     { category: "Frameworks", skills: ["Spring Boot", "React.js", "Django", ".NET"], color: "from-cyan-500 to-blue-500" },
@@ -83,9 +85,9 @@ export function Skills() {
       <div className="relative max-w-6xl mx-auto">
         {/* --- Titre section --- */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={fadeInUpVariants(multipliers.distance).hidden}
+          whileInView={fadeInUpVariants(multipliers.distance).show}
+          transition={getTransition({ duration: isMobile ? 0.45 : 0.8 })}
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -99,16 +101,16 @@ export function Skills() {
 
         {/* --- Grille principale --- */}
         <motion.div
-          initial={{ opacity: 0, y: 60 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.9, ease: "easeOut" }}
+          initial={fadeInUpVariants(multipliers.distance * 1.2).hidden}
+          whileInView={fadeInUpVariants(multipliers.distance * 1.2).show}
+          transition={getTransition({ duration: isMobile ? 0.5 : 0.9 })}
           className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
               whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: isMobile ? 0.2 : 0.3 }}
             >
               <Card className="p-6 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-slate-700/50 shadow-lg hover:shadow-[0_0_25px_rgba(45,255,196,0.25)] transition-all duration-500">
                 <h3

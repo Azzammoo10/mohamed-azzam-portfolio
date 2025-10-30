@@ -2,8 +2,10 @@
 import { LogoBadge } from "./LogoBadge"; // adapte le chemin
 import { Calendar, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
+import { useMotionSettings, fadeInUpVariants, getTransition } from "../motionConfig";
 
 export function Experience() {
+  const { isMobile, multipliers } = useMotionSettings();
   const experiences = [
     {
       year: "2025",
@@ -67,9 +69,9 @@ export function Experience() {
       <div className="relative container mx-auto px-6 lg:px-12">
         {/* --- Titre --- */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={fadeInUpVariants(multipliers.distance * 0.8).hidden}
+          whileInView={fadeInUpVariants(multipliers.distance * 0.8).show}
+          transition={getTransition({ duration: isMobile ? 0.45 : 0.8 })}
           className="text-center space-y-4 mb-16"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -86,9 +88,9 @@ export function Experience() {
           {experiences.map((exp, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: i * 0.2 }}
+              initial={fadeInUpVariants(multipliers.distance).hidden}
+              whileInView={fadeInUpVariants(multipliers.distance).show}
+              transition={getTransition({ duration: isMobile ? 0.35 : 0.6, delay: isMobile ? 0 : i * 0.12 })}
               className="group relative"
             >
               <div className="h-full bg-slate-800/60 backdrop-blur-xl border border-slate-700/70 hover:border-cyan-400/50 rounded-2xl p-6 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_0_25px_rgba(0,255,204,0.1)] overflow-hidden">
@@ -163,9 +165,9 @@ export function Experience() {
 
         {/* --- Statistiques dynamiques --- */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
+          initial={fadeInUpVariants(multipliers.distance).hidden}
+          whileInView={fadeInUpVariants(multipliers.distance).show}
+          transition={getTransition({ duration: isMobile ? 0.45 : 0.8, delay: isMobile ? 0.1 : 0.4 })}
           className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto text-center"
         >
           {[

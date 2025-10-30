@@ -1,44 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
-import { useReducedMotion } from "framer-motion";
+import { useMotionSettings, shouldUseLayoutAnimation, getTransition, useIsTouchDevice } from "../motionConfig";
 
-// 👉 Détection robuste des appareils tactiles (tous types de téléphones/tablettes)
-function useIsTouchDevice() {
-  const [isTouch, setIsTouch] = useState(() =>
-    typeof window !== "undefined"
-      ? window.matchMedia && (window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches)
-      : false
-  );
-  useEffect(() => {
-    const m1 = window.matchMedia("(hover: none)");
-    const m2 = window.matchMedia("(pointer: coarse)");
-    const update = () => setIsTouch(m1.matches || m2.matches);
-    update();
-    m1.addEventListener?.("change", update);
-    m2.addEventListener?.("change", update);
-    return () => {
-      m1.removeEventListener?.("change", update);
-      m2.removeEventListener?.("change", update);
-    };
-  }, []);
-  return isTouch;
-}
-
-// 👉 useIsMobile hook partagé
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return isMobile;
-}
-
-// Pattern d'animation mobile aligné avec About.tsx
+// Pattern centralisé via motionConfig
 
 export function Projects() {
   const projects = [
@@ -106,8 +73,7 @@ export function Projects() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(3);
-  const shouldReduce = useReducedMotion();
-  const isMobile = useIsMobile();
+  const { isMobile, shouldReduce } = useMotionSettings();
   const isTouch = useIsTouchDevice();
 
   const toggleVisible = () => {
@@ -146,7 +112,8 @@ export function Projects() {
         ) : (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={getTransition({ duration: isMobile ? 0.4 : 0.5 })}
             className="text-center space-y-4 mb-16"
           >
             <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -210,9 +177,9 @@ export function Projects() {
               {projects.slice(0, visibleCount).map((project) => (
                 <motion.div
                   key={project.title}
-                  layout={!isMobile && !shouldReduce}
+                  layout={shouldUseLayoutAnimation(Boolean(shouldReduce), isMobile)}
                   initial={{ opacity: 0, y: 25 }}
-                  animate={{ opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } }}
+                  animate={{ opacity: 1, y: 0, transition: getTransition({ duration: isMobile ? 0.25 : 0.35 }) }}
                   exit={{ opacity: 0, y: -10 }}
                   className="group relative"
                 >

@@ -4,22 +4,13 @@ import { Mail, MapPin, Linkedin, Send, CheckCircle, Phone } from "lucide-react";
 import { useForm, ValidationError } from "@formspree/react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-  return isMobile;
-}
+import { useMotionSettings, getTransition, fadeInUpVariants } from "../motionConfig";
 
 export function Contact() {
   const [state, handleSubmit] = useForm("mwpwpynd");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({ email: "", message: "" });
-  const isMobile = useIsMobile();
+  const { isMobile, shouldReduce, multipliers } = useMotionSettings();
 
   useEffect(() => {
     if (state.succeeded) {
@@ -92,8 +83,8 @@ export function Contact() {
 <AnimatePresence>
   {showSuccess && (
     <motion.div
-      initial={isMobile ? { opacity: 0 } : { opacity: 0, y: -15, scale: 0.8, filter: "blur(6px)" }}
-      animate={isMobile ? { opacity: 1, transition: { duration: 0.15 } } : {
+      initial={isMobile || shouldReduce ? { opacity: 0 } : { opacity: 0, y: -15, scale: 0.9, filter: "blur(6px)" }}
+      animate={isMobile || shouldReduce ? { opacity: 1, transition: { duration: 0.15 } } : {
         opacity: 1,
         y: 0,
         scale: 1,
@@ -102,15 +93,15 @@ export function Contact() {
           type: "spring",
           stiffness: 180,
           damping: 12,
-          duration: 0.5,
+          duration: 0.45,
         },
       }}
-      exit={isMobile ? { opacity: 0 } : {
+      exit={isMobile || shouldReduce ? { opacity: 0 } : {
         opacity: 0,
-        scale: 0.8,
+        scale: 0.9,
         y: -15,
         filter: "blur(6px)",
-        transition: { duration: 0.4, ease: "easeOut" },
+        transition: { duration: 0.35, ease: "easeOut" },
       }}
       className="absolute top-4 right-4 flex items-center gap-2 px-4 py-2 
                  bg-gradient-to-r from-teal-500/20 to-cyan-500/20 
@@ -276,9 +267,9 @@ export function Contact() {
 
         <motion.div
           className="absolute bottom-6 right-4 sm:bottom-8 sm:right-8 md:bottom-10 md:right-10 z-30"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          initial={fadeInUpVariants(multipliers.distance * 0.4).hidden}
+          whileInView={fadeInUpVariants(multipliers.distance * 0.4).show}
+          transition={getTransition({ duration: isMobile ? 0.4 : 0.8 })}
         >
           <motion.button
             whileHover={{ scale: 1.15, rotate: 8 }}

@@ -120,9 +120,9 @@ export function Hero() {
           <motion.div
             animate={{ rotate: [0, 6, -6, 0] }}
             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-            className="text-cyan-400 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)]"
+            className="text-cyan-400 drop-shadow-[0_0_10px_rgba(0,255,255,0.5)] mt-8 md:mt-12"
           >
-            <ShieldCheck size={34} strokeWidth={2.5} />
+            <ShieldCheck size={20} strokeWidth={2.5} />
           </motion.div>
         </motion.div>
 
