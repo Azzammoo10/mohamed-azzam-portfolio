@@ -1,17 +1,29 @@
-import { Download, Github, Linkedin, Mail, ShieldCheck } from "lucide-react";
+import { Download, Github, Linkedin, Mail, ShieldCheck, ChevronDown } from "lucide-react";
 import { Button } from "./Button";
 import { TerminalPanel } from "./TerminalPanel";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+// Détection appareils tactiles (téléphones/tablettes)
+function useIsTouchDevice() {
+  const [isTouch, setIsTouch] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia && (window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches)
+      : false
+  );
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const m1 = window.matchMedia("(hover: none)");
+    const m2 = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsTouch(m1.matches || m2.matches);
+    update();
+    m1.addEventListener?.("change", update);
+    m2.addEventListener?.("change", update);
+    return () => {
+      m1.removeEventListener?.("change", update);
+      m2.removeEventListener?.("change", update);
+    };
   }, []);
-  return isMobile;
+  return isTouch;
 }
 
 export function Hero() {
@@ -19,6 +31,7 @@ export function Hero() {
     const el = document.querySelector(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+  const isTouch = useIsTouchDevice();
 
   // --- Canvas Particules ---
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -82,7 +95,7 @@ export function Hero() {
     return () => window.removeEventListener("resize", resize);
   }, []);
 
-  const isMobile = useIsMobile();
+  
 
   return (
     <section className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-[#081220] via-[#0A1825] to-[#0B1F2B] text-white">
@@ -214,19 +227,23 @@ export function Hero() {
         <div className="md:hidden text-cyan-400 text-sm font-mono animate-pulse mt-6">
           Chargement du profil sécurisé...
         </div>
-      </div>
 
-      {/* --- Indicateur scroll avec lumière pulsante --- */}
-      <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce"
-      >
-        <div className="w-6 h-10 border-2 border-cyan-400 rounded-full flex justify-center p-2 shadow-[0_0_12px_rgba(0,255,204,0.4)]">
-          <div className="w-1 h-3 bg-gradient-to-b from-cyan-400 to-teal-500 rounded-full animate-pulse" />
+        {/* --- Bouton de scroll placé juste sous le terminal --- */}
+        <div className="flex justify-center mt-6 md:mt-8">
+          <motion.button
+            onClick={() => scrollToSection("#about")}
+            aria-label="Aller à la section À propos"
+            initial={{ opacity: 1 }}
+            animate={isTouch ? { opacity: [0.9, 1, 0.9], y: [0, 1, 0] } : { opacity: [0.7, 1, 0.7], y: [0, 3, 0] }}
+            transition={isTouch ? { duration: 0.8, repeat: Infinity, ease: "easeInOut" } : { duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-400/70 bg-[#0A1825]/60 backdrop-blur-sm text-cyan-200 shadow-[0_0_10px_rgba(0,255,204,0.18)] hover:border-cyan-300 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+          >
+            <ChevronDown size={18} className="text-cyan-300" />
+            <span className="text-sm font-medium">About me</span>
+          </motion.button>
         </div>
-      </motion.div>
+      </div>
+    
     </section>
   );
 }

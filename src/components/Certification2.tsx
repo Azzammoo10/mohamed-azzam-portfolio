@@ -7,14 +7,25 @@ import { Award, CheckCircle2, Clock, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useEffect } from "react";
 
-function useIsMobile() {
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+function useIsTouchDevice() {
+  const [isTouch, setIsTouch] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia && (window.matchMedia("(hover: none)").matches || window.matchMedia("(pointer: coarse)").matches)
+      : false
+  );
   useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const m1 = window.matchMedia("(hover: none)");
+    const m2 = window.matchMedia("(pointer: coarse)");
+    const update = () => setIsTouch(m1.matches || m2.matches);
+    update();
+    m1.addEventListener?.("change", update);
+    m2.addEventListener?.("change", update);
+    return () => {
+      m1.removeEventListener?.("change", update);
+      m2.removeEventListener?.("change", update);
+    };
   }, []);
-  return isMobile;
+  return isTouch;
 }
 
 export function CertificationsSection() {
@@ -35,7 +46,7 @@ export function CertificationsSection() {
 
   const [visibleCount, setVisibleCount] = useState(6);
   const shouldReduce = useReducedMotion();
-  const isMobile = useIsMobile();
+  const isTouch = useIsTouchDevice();
 
   const toggleVisible = () =>
     setVisibleCount(visibleCount === 6 ? certifications.length : 6);
@@ -52,130 +63,192 @@ export function CertificationsSection() {
 
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-12">
         {/* --- En-tête --- */}
-        <motion.div
-          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-          whileInView={isMobile ? { opacity: 1, transition: { duration: 0.15 } } : { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } }}
-          className="text-center space-y-4 mb-12"
-        >
-          <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
-            Certifications <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Professionnelle</span>
-          </h2>
-          <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
-          <p className="text-slate-400 text-sm max-w-xl mx-auto">
-            Parcours certifiant orienté cybersécurité, réseaux et développement sécurisé.
-          </p>
-        </motion.div>
+        {isTouch ? (
+          <div className="text-center space-y-4 mb-12">
+            <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+              Certifications <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Professionnelle</span>
+            </h2>
+            <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
+            <p className="text-slate-400 text-sm max-w-xl mx-auto">
+              Parcours certifiant orienté cybersécurité, réseaux et développement sécurisé.
+            </p>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="text-center space-y-4 mb-12"
+          >
+            <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
+              Certifications <span className="bg-gradient-to-r from-teal-400 to-cyan-400 bg-clip-text text-transparent">Professionnelle</span>
+            </h2>
+            <div className="h-[2px] w-24 bg-gradient-to-r from-teal-400 via-cyan-400 to-teal-400 mx-auto rounded-full shadow-[0_0_10px_rgba(0,255,204,0.5)]" />
+            <p className="text-slate-400 text-sm max-w-xl mx-auto">
+              Parcours certifiant orienté cybersécurité, réseaux et développement sécurisé.
+            </p>
+          </motion.div>
+        )}
 
         {/* --- Liste des certifications --- */}
-        <motion.div
-          layout
-  className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto"
-        >
-          <AnimatePresence>
+        {isTouch ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto">
             {certifications.slice(0, visibleCount).map((cert, index) => (
-              <motion.div
-                  key={index}
-                  layout={!shouldReduce && !isMobile}
-                  initial={isMobile ? { opacity: 0 } : shouldReduce ? false : { opacity: 0, y: 18 }}
-                  animate={isMobile ? { opacity: 1, transition: { duration: 0.13 } } : shouldReduce ? {} : { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } }}
-                  exit={isMobile ? { opacity: 0 } : shouldReduce ? {} : { opacity: 0, y: -10 }}
-                >
-
-                <Card
-                  className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md 
-                  transition-all duration-200 hover:border-teal-500/40 hover:-translate-y-1 
-                 hover:shadow-[0_0_12px_rgba(45,255,196,0.12)] relative overflow-hidden"
-                >
+              <div key={index}>
+                <Card className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md transition-all duration-200 hover:border-teal-500/40 hover:-translate-y-1 hover:shadow-[0_0_12px_rgba(45,255,196,0.12)] relative overflow-hidden">
                   <div className="flex items-start justify-between mb-3">
                     <div>
-                      <h4 className="font-semibold text-white text-sm mb-1 leading-snug">
-                        {cert.name}
-                      </h4>
+                      <h4 className="font-semibold text-white text-sm mb-1 leading-snug">{cert.name}</h4>
                       <p className="text-xs text-teal-400">{cert.issuer}</p>
                     </div>
                     {cert.status === "Completed" ? (
                       <CheckCircle2 className="h-5 w-5 text-emerald-400" />
                     ) : (
-                      <Clock className="h-5 w-5 text-yellow-400 animate-pulse" />
+                      <Clock className="h-5 w-5 text-yellow-400" />
                     )}
                   </div>
 
-                  {/* --- Bouton certificat --- */}
                   {cert.url ? (
-                    <motion.a
+                    <a
                       href={cert.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={!isMobile ? { scale: 1.04 } : {}}
-                      whileTap={!isMobile ? { scale: 0.96 } : {}}
-                      transition={!isMobile ? { duration: 0.2 } : {}}
-                      className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden transition-all duration-200"
+                      className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/15 to-teal-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
                       <ExternalLink size={12} className="text-teal-400 group-hover:text-white transition-colors" />
                       <span className="relative z-10">Voir le certificat</span>
-                    </motion.a>
+                    </a>
                   ) : (
-                    <div className="text-xs text-slate-500 italic mb-3">
-                      Formation en cours
-                    </div>
+                    <div className="text-xs text-slate-500 italic mb-3">Formation en cours</div>
                   )}
 
-                  {/* --- Statut --- */}
                   <div className="flex items-center justify-between pt-2 border-t border-slate-700/40">
-                    <span className="text-xs text-slate-500">
-                      {cert.status === "Completed" ? "Validée" : "En cours"}
-                    </span>
+                    <span className="text-xs text-slate-500">{cert.status === "Completed" ? "Validée" : "En cours"}</span>
                     <Badge
                       variant="secondary"
-                      className={`text-[11px] ${
-                        cert.status === "Completed"
-                          ? "bg-emerald-500/10 text-emerald-400 border-emerald-400/40"
-                          : "bg-yellow-500/10 text-yellow-300 border-yellow-400/40"
-                      }`}
+                      className={`text-[11px] ${cert.status === "Completed" ? "bg-emerald-500/10 text-emerald-400 border-emerald-400/40" : "bg-yellow-500/10 text-yellow-300 border-yellow-400/40"}`}
                     >
                       {cert.status}
                     </Badge>
                   </div>
                 </Card>
-              </motion.div>
+              </div>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+        ) : (
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 max-w-6xl mx-auto">
+            <AnimatePresence>
+              {certifications.slice(0, visibleCount).map((cert, index) => (
+                <motion.div
+                  key={index}
+                  layout={!shouldReduce}
+                  initial={shouldReduce ? false : { opacity: 0, y: 18 }}
+                  animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
+                  exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                >
+                  <Card className="p-6 rounded-xl border border-slate-700/70 bg-slate-900/50 backdrop-blur-md transition-all duration-200 hover:border-teal-500/40 hover:-translate-y-1 hover:shadow-[0_0_12px_rgba(45,255,196,0.12)] relative overflow-hidden">
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <h4 className="font-semibold text-white text-sm mb-1 leading-snug">{cert.name}</h4>
+                        <p className="text-xs text-teal-400">{cert.issuer}</p>
+                      </div>
+                      {cert.status === "Completed" ? (
+                        <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                      ) : (
+                        <Clock className="h-5 w-5 text-yellow-400 animate-pulse" />
+                      )}
+                    </div>
+
+                    {cert.url ? (
+                      <motion.a
+                        href={cert.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        whileHover={{ scale: 1.04 }}
+                        whileTap={{ scale: 0.96 }}
+                        transition={{ duration: 0.2 }}
+                        className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden transition-all duration-200"
+                      >
+                        <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/15 to-teal-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
+                        <ExternalLink size={12} className="text-teal-400 group-hover:text-white transition-colors" />
+                        <span className="relative z-10">Voir le certificat</span>
+                      </motion.a>
+                    ) : (
+                      <div className="text-xs text-slate-500 italic mb-3">Formation en cours</div>
+                    )}
+
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-700/40">
+                      <span className="text-xs text-slate-500">{cert.status === "Completed" ? "Validée" : "En cours"}</span>
+                      <Badge
+                        variant="secondary"
+                        className={`text-[11px] ${cert.status === "Completed" ? "bg-emerald-500/10 text-emerald-400 border-emerald-400/40" : "bg-yellow-500/10 text-yellow-300 border-yellow-400/40"}`}
+                      >
+                        {cert.status}
+                      </Badge>
+                    </div>
+                  </Card>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
 
         {/* --- Bouton “Afficher plus / moins” --- */}
         <div className="text-center mt-10">
-          <motion.button
-            onClick={toggleVisible}
-            whileHover={!isMobile ? { scale: 1.04 } : {}}
-            whileTap={!isMobile ? { scale: 0.97 } : {}}
-            transition={!isMobile ? { duration: 0.2 } : {}}
-            className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
-            <span className="relative z-10">
-              {visibleCount === 6 ? "Afficher plus" : "Afficher moins"}
-            </span>
-          </motion.button>
+          {isTouch ? (
+            <button
+              onClick={toggleVisible}
+              className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
+            >
+              <span className="relative z-10">{visibleCount === 6 ? "Afficher plus" : "Afficher moins"}</span>
+            </button>
+          ) : (
+            <motion.button
+              onClick={toggleVisible}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ duration: 0.2 }}
+              className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
+              <span className="relative z-10">{visibleCount === 6 ? "Afficher plus" : "Afficher moins"}</span>
+            </motion.button>
+          )}
         </div>
 
         {/* --- Objectif 2026 --- */}
-        <motion.div
-          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
-          whileInView={isMobile ? { opacity: 1, transition: { duration: 0.22 } } : { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }}
-          className="max-w-md sm:max-w-3xl mx-auto mt-14"
-        >
-          <Card className="p-6 text-center bg-gradient-to-br from-teal-900/20 to-cyan-900/10 border border-teal-500/30 rounded-xl hover:shadow-[0_0_20px_rgba(45,255,196,0.15)] transition-all duration-300">
-            <Award className="h-6 w-6 text-teal-400 mx-auto mb-2" />
-            <h3 className="text-white text-sm sm:text-base font-semibold mb-1">
-              Objectif <span className="text-teal-400">2026</span>
-            </h3>
-            <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
-              Poursuivre l’obtention de certifications avancées en cybersécurité
-              afin de renforcer mon expertise technique.
-            </p>
-          </Card>
-        </motion.div>
+        {isTouch ? (
+          <div className="max-w-md sm:max-w-3xl mx-auto mt-14">
+            <Card className="p-6 text-center bg-gradient-to-br from-teal-900/20 to-cyan-900/10 border border-teal-500/30 rounded-xl hover:shadow-[0_0_20px_rgba(45,255,196,0.15)]">
+              <Award className="h-6 w-6 text-teal-400 mx-auto mb-2" />
+              <h3 className="text-white text-sm sm:text-base font-semibold mb-1">
+                Objectif <span className="text-teal-400">2026</span>
+              </h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
+                Poursuivre l’obtention de certifications avancées en cybersécurité afin de renforcer mon expertise technique.
+              </p>
+            </Card>
+          </div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            className="max-w-md sm:max-w-3xl mx-auto mt-14"
+          >
+            <Card className="p-6 text-center bg-gradient-to-br from-teal-900/20 to-cyan-900/10 border border-teal-500/30 rounded-xl hover:shadow-[0_0_20px_rgba(45,255,196,0.15)] transition-all duration-300">
+              <Award className="h-6 w-6 text-teal-400 mx-auto mb-2" />
+              <h3 className="text-white text-sm sm:text-base font-semibold mb-1">
+                Objectif <span className="text-teal-400">2026</span>
+              </h3>
+              <p className="text-slate-400 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
+                Poursuivre l’obtention de certifications avancées en cybersécurité
+                afin de renforcer mon expertise technique.
+              </p>
+            </Card>
+          </motion.div>
+        )}
       </div>
     </section>
   );
