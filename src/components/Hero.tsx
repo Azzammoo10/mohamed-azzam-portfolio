@@ -2,7 +2,17 @@ import { Download, Github, Linkedin, Mail, ShieldCheck } from "lucide-react";
 import { Button } from "./Button";
 import { TerminalPanel } from "./TerminalPanel";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return isMobile;
+}
 
 export function Hero() {
   const scrollToSection = (id: string) => {
@@ -71,6 +81,8 @@ export function Hero() {
     window.addEventListener("resize", resize);
     return () => window.removeEventListener("resize", resize);
   }, []);
+
+  const isMobile = useIsMobile();
 
   return (
     <section className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-b from-[#081220] via-[#0A1825] to-[#0B1F2B] text-white">

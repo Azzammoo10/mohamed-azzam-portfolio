@@ -5,10 +5,21 @@ import { useForm, ValidationError } from "@formspree/react";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return isMobile;
+}
+
 export function Contact() {
   const [state, handleSubmit] = useForm("mwpwpynd");
   const [showSuccess, setShowSuccess] = useState(false);
   const [formData, setFormData] = useState({ email: "", message: "" });
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (state.succeeded) {
@@ -81,8 +92,8 @@ export function Contact() {
 <AnimatePresence>
   {showSuccess && (
     <motion.div
-      initial={{ opacity: 0, y: -15, scale: 0.8, filter: "blur(6px)" }}
-      animate={{
+      initial={isMobile ? { opacity: 0 } : { opacity: 0, y: -15, scale: 0.8, filter: "blur(6px)" }}
+      animate={isMobile ? { opacity: 1, transition: { duration: 0.15 } } : {
         opacity: 1,
         y: 0,
         scale: 1,
@@ -94,7 +105,7 @@ export function Contact() {
           duration: 0.5,
         },
       }}
-      exit={{
+      exit={isMobile ? { opacity: 0 } : {
         opacity: 0,
         scale: 0.8,
         y: -15,

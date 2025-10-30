@@ -5,6 +5,17 @@ import { Card } from "../components/ui/card";
 import { Badge } from "../components/ui/badge";
 import { Award, CheckCircle2, Clock, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useEffect } from "react";
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return isMobile;
+}
 
 export function CertificationsSection() {
   const certifications = [
@@ -24,6 +35,7 @@ export function CertificationsSection() {
 
   const [visibleCount, setVisibleCount] = useState(6);
   const shouldReduce = useReducedMotion();
+  const isMobile = useIsMobile();
 
   const toggleVisible = () =>
     setVisibleCount(visibleCount === 6 ? certifications.length : 6);
@@ -41,9 +53,8 @@ export function CertificationsSection() {
       <div className="relative container mx-auto px-4 sm:px-6 lg:px-12">
         {/* --- En-tête --- */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          whileInView={isMobile ? { opacity: 1, transition: { duration: 0.15 } } : { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } }}
           className="text-center space-y-4 mb-12"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -64,11 +75,10 @@ export function CertificationsSection() {
             {certifications.slice(0, visibleCount).map((cert, index) => (
               <motion.div
                   key={index}
-                  layout={!shouldReduce}
-                  initial={shouldReduce ? false : { opacity: 0, y: 18 }}
-                  animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
-                  exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  layout={!shouldReduce && !isMobile}
+                  initial={isMobile ? { opacity: 0 } : shouldReduce ? false : { opacity: 0, y: 18 }}
+                  animate={isMobile ? { opacity: 1, transition: { duration: 0.13 } } : shouldReduce ? {} : { opacity: 1, y: 0, transition: { duration: 0.25, ease: "easeOut" } }}
+                  exit={isMobile ? { opacity: 0 } : shouldReduce ? {} : { opacity: 0, y: -10 }}
                 >
 
                 <Card
@@ -96,9 +106,9 @@ export function CertificationsSection() {
                       href={cert.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      whileHover={{ scale: 1.04 }}
-                      whileTap={{ scale: 0.96 }}
-                      transition={{ duration: 0.2 }}
+                      whileHover={!isMobile ? { scale: 1.04 } : {}}
+                      whileTap={!isMobile ? { scale: 0.96 } : {}}
+                      transition={!isMobile ? { duration: 0.2 } : {}}
                       className="group relative inline-flex items-center gap-2 mt-2 mb-3 px-4 py-2 rounded-full text-xs font-medium text-teal-400 border border-teal-500/40 hover:text-white hover:border-teal-400 overflow-hidden transition-all duration-200"
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/15 to-teal-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
@@ -137,9 +147,9 @@ export function CertificationsSection() {
         <div className="text-center mt-10">
           <motion.button
             onClick={toggleVisible}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.97 }}
-            transition={{ duration: 0.2 }}
+            whileHover={!isMobile ? { scale: 1.04 } : {}}
+            whileTap={!isMobile ? { scale: 0.97 } : {}}
+            transition={!isMobile ? { duration: 0.2 } : {}}
             className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
@@ -151,9 +161,8 @@ export function CertificationsSection() {
 
         {/* --- Objectif 2026 --- */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: "easeOut" }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 20 }}
+          whileInView={isMobile ? { opacity: 1, transition: { duration: 0.22 } } : { opacity: 1, y: 0, transition: { duration: 0.4, ease: "easeOut" } }}
           className="max-w-md sm:max-w-3xl mx-auto mt-14"
         >
           <Card className="p-6 text-center bg-gradient-to-br from-teal-900/20 to-cyan-900/10 border border-teal-500/30 rounded-xl hover:shadow-[0_0_20px_rgba(45,255,196,0.15)] transition-all duration-300">

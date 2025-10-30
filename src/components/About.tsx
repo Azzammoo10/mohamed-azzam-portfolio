@@ -1,9 +1,32 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { Card } from "./Card";
 import { Shield, Code, Network, Award } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function About() {
   const shouldReduce = useReducedMotion();
+  // Custom hook to detect mobile view
+  function useIsMobile() {
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+    useEffect(() => {
+      const onResize = () => setIsMobile(window.innerWidth < 768);
+      window.addEventListener("resize", onResize);
+      return () => window.removeEventListener("resize", onResize);
+    }, []);
+    return isMobile;
+  }
+  const isMobile = useIsMobile();
+
+  // fadeUp variant that adapts for mobile performance
+  const fadeUp = isMobile
+    ? {
+        hidden: { opacity: 0 },
+        visible: { opacity: 1, transition: { duration: 0.18 } }, // ultra-fast fade only on mobile
+      }
+    : {
+        hidden: { opacity: 0, y: shouldReduce ? 0 : 18 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+      };
 
   const strengths = [
     {
@@ -28,11 +51,6 @@ export function About() {
       description: "NSE 1, CCNAv7, Linux, Security+ (en cours).",
     },
   ];
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: shouldReduce ? 0 : 18 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
 
   return (
     <section

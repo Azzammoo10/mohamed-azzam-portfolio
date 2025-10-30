@@ -1,8 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink } from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+
+// 👉 useIsMobile hook partagé
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768);
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return isMobile;
+}
 
 export function Projects() {
   const projects = [
@@ -70,16 +82,8 @@ export function Projects() {
   ];
 
   const [visibleCount, setVisibleCount] = useState(3);
-  const [isMobile, setIsMobile] = useState(false);
   const shouldReduce = useReducedMotion();
-
-  // 🔹 Détection mobile pour ajuster la vitesse
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
+  const isMobile = useIsMobile();
 
   const toggleVisible = () => {
     setVisibleCount(visibleCount === 3 ? projects.length : 3);
@@ -96,9 +100,6 @@ export function Projects() {
     }
   };
 
-  // 🕹️ Animation speed conditionnelle
-  const animationSpeed = isMobile ? 0.2 : 0.4;
-
   return (
     <section id="projects" className="relative py-24 bg-[#081220] overflow-hidden">
       {/* Halo de fond */}
@@ -110,9 +111,8 @@ export function Projects() {
       <div className="relative container mx-auto px-6 lg:px-12">
         {/* Titre */}
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: animationSpeed, ease: "easeOut" }}
+          initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 30 }}
+          whileInView={isMobile ? { opacity: 1, transition: { duration: 0.15 } } : { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
           className="text-center space-y-4 mb-16"
         >
           <h2 className="text-4xl font-extrabold text-white mb-3 tracking-tight">
@@ -128,50 +128,41 @@ export function Projects() {
         </motion.div>
 
         {/* Grille de projets */}
-        <motion.div layout className="grid lg:grid-cols-3 md:grid-cols-2 gap-6 sm:gap-8 max-w-7xl mx-auto">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 max-w-7xl mx-auto">
           <AnimatePresence mode="sync">
             {projects.slice(0, visibleCount).map((project) => (
               <motion.div
                 key={project.title}
-                layout={!shouldReduce}
-                initial={shouldReduce ? false : { opacity: 0, y: 20 }}
-                animate={shouldReduce ? {} : { opacity: 1, y: 0 }}
-                exit={shouldReduce ? {} : { opacity: 0, y: -10 }}
-                transition={{ duration: animationSpeed, ease: "easeOut" }}
+                layout={!isMobile && !shouldReduce}
+                initial={isMobile ? { opacity: 0 } : { opacity: 0, y: 25 }}
+                animate={isMobile ? { opacity: 1, transition: { duration: 0.13 } } : { opacity: 1, y: 0, transition: { duration: 0.35, ease: "easeOut" } }}
+                exit={isMobile ? { opacity: 0 } : { opacity: 0, y: -10 }}
                 className="group relative"
               >
                 <div
-  className="relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 
-  rounded-2xl p-6 transition-all duration-200 ease-out 
-  hover:border-teal-500/60 hover:shadow-[0_0_15px_rgba(45,255,196,0.2)] hover:-translate-y-1.5 
-  active:scale-[0.98] overflow-hidden">
-  
-  <div
-    className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 
-    group-hover:from-teal-500/10 group-hover:via-cyan-500/5 group-hover:to-teal-500/10 
-    transition-all duration-200 ease-out"
-  />
-
+                  className={`relative h-full bg-slate-800/60 backdrop-blur-md border border-slate-700/60 rounded-2xl p-6 
+                  ${!isMobile ? "transition-all duration-300 hover:border-teal-500/60 hover:shadow-[0_0_15px_rgba(45,255,196,0.15)] hover:-translate-y-2" : ""}
+                  overflow-hidden`}
+                >
+                  {!isMobile && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-cyan-500/0 to-teal-500/0 group-hover:from-teal-500/5 group-hover:via-cyan-500/3 group-hover:to-teal-500/5 transition-all duration-500" />
+                  )}
                   <div className="relative z-10 flex flex-col h-full">
                     {/* Titre et statut */}
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-2">
-                        <div
-                          className={`p-3 bg-gradient-to-br ${project.color}/20 rounded-xl`}
-                        >
+                        <div className={`p-3 bg-gradient-to-br ${project.color}/20 rounded-xl`}>
                           <Github
-                            className="h-6 w-6 text-cyan-400 group-hover:rotate-6 transition-transform"
+                            className="h-6 w-6 text-cyan-400"
                             strokeWidth={1.6}
                           />
                         </div>
-                        <h3 className="text-lg font-bold text-white">
-                          {project.title}
-                        </h3>
+                        <h3 className="text-lg font-bold text-white">{project.title}</h3>
                       </div>
                       <span
                         className={`text-xs px-2 py-1 bg-gradient-to-r ${getStatusStyle(
                           project.status
-                        )} rounded-full border font-medium transition-all duration-300 group-hover:scale-105`}
+                        )} rounded-full border font-medium`}
                       >
                         {project.status}
                       </span>
@@ -196,38 +187,58 @@ export function Projects() {
                       href={project.github}
                       target="_blank"
                       rel="noopener noreferrer"
-className="group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 
-bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 
-rounded-lg text-slate-300 hover:text-white hover:border-teal-500/60 
-hover:bg-gradient-to-r hover:from-teal-500/20 hover:to-cyan-500/20 
-transition-all duration-200 ease-out overflow-hidden active:scale-[0.98]"
+                      className={`group relative inline-flex items-center justify-center gap-2 px-4 py-2.5 
+                      bg-gradient-to-r from-slate-700/40 to-slate-600/40 border border-slate-600/40 rounded-lg 
+                      text-slate-300 hover:text-white ${!isMobile ? "hover:border-teal-500/60 hover:bg-gradient-to-r hover:from-teal-500/15 hover:to-cyan-500/15 transition-all duration-300" : ""} 
+                      overflow-hidden`}
                     >
-                      <Github size={16} className="group-hover:rotate-12 transition-transform duration-300" />
+                      <Github size={16} />
                       <span className="font-medium text-sm">Code</span>
-                      <ExternalLink size={14} className="group-hover:translate-x-0.5 transition-transform duration-300" />
+                      <ExternalLink size={14} />
                     </a>
                   </div>
                 </div>
               </motion.div>
             ))}
           </AnimatePresence>
-        </motion.div>
+        </div>
 
         {/* Bouton "Afficher plus / moins" */}
         <div className="text-center mt-10">
           <motion.button
             onClick={toggleVisible}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 1.02 }}
-            transition={{ duration: 0.15, ease: "easeOut" }}
+            whileHover={!isMobile ? { scale: 1.07 } : {}}
+            whileTap={!isMobile ? { scale: 0.95 } : {}}
+            transition={!isMobile ? { duration: 0.2 } : {}}
             className="relative px-8 py-2.5 text-sm font-semibold rounded-full border border-teal-500/50 text-teal-400 overflow-hidden group"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out" />
+            {!isMobile && (
+              <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 via-teal-500/20 to-cyan-500/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-out" />
+            )}
             <span className="relative z-10">
               {visibleCount === 3 ? "Afficher plus" : "Afficher moins"}
             </span>
           </motion.button>
         </div>
+        {/* Bouton global "Voir tous les projets sur GitHub" */}
+<div className="text-center mt-6">
+  <motion.a
+    href="https://github.com/Azzammoo10"
+    target="_blank"
+    rel="noopener noreferrer"
+    whileHover={!isMobile ? { scale: 1.05 } : {}}
+    whileTap={!isMobile ? { scale: 0.97 } : {}}
+    transition={!isMobile ? { duration: 0.2 } : {}}
+    className="inline-flex items-center gap-2 px-8 py-2.5 
+      rounded-full border border-teal-500/50 text-teal-400 
+      hover:text-white hover:border-teal-400 hover:bg-teal-500/10
+      transition-all duration-300"
+  >
+    <Github size={18} />
+    <span className="font-medium">Voir tous les projets sur GitHub</span>
+  </motion.a>
+</div>
+
       </div>
     </section>
   );
